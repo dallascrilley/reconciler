@@ -56,7 +56,10 @@
     "src/seed/cli.ts",
     "src/seed/generator.test.ts",
     "src/seed/generator.ts",
-    "src/server.ts"
+    "src/server.ts",
+    "src/storage/database.test.ts",
+    "src/storage/database.ts",
+    "src/storage/reset-demo.ts"
   ],
   "diffCommand": "diff -ru receipts/generated src",
   "generatedFilesAreReceiptsOnly": true

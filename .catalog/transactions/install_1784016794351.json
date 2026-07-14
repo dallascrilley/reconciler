@@ -1,9 +1,9 @@
 {
-  "id": "install_1784014077334",
-  "installedAt": "2026-07-14T07:27:57.334Z",
+  "id": "install_1784016794351",
+  "installedAt": "2026-07-14T08:13:14.351Z",
   "catalog": {
     "source": "file://catalog/",
-    "assetId": "pattern:api-path",
+    "assetId": "primitive:staged-dataset-query",
     "assetVersion": "experimental"
   },
   "target": {
@@ -11,10 +11,10 @@
   },
   "files": [
     {
-      "sourcePath": "src/api-path.ts",
-      "targetPath": "./vendor/catalog/pattern-api-path/src/api-path.ts",
+      "sourcePath": "src/staged-dataset-query.ts",
+      "targetPath": "./vendor/catalog/primitive-staged-dataset-query/src/staged-dataset-query.ts",
       "action": "copy",
-      "checksum": "f9942871a815d2fcbcee5dc0f7fb84cc8b2c6c98df474a81964b79191d2cbf96"
+      "checksum": "2fe181b0a091370f3c05cbb6cd3f9038d27c58a9fb8e841cfec21a4e0d1f1097"
     }
   ],
   "dependenciesAdded": [],
@@ -25,20 +25,15 @@
   },
   "verification": [
     {
-      "command": "pnpm --dir catalog/blocks/api-path test",
-      "exitCode": null,
-      "output": "not run at install time — run catalog.verify_install with execute:true"
-    },
-    {
-      "command": "pnpm --dir catalog/blocks/api-path typecheck",
+      "command": "pnpm --dir catalog/primitives/staged-dataset-query test",
       "exitCode": null,
       "output": "not run at install time — run catalog.verify_install with execute:true"
     }
   ],
   "rollback": {
     "instructions": [
-      "Remove files copied from pattern:api-path:",
-      "  rm ./vendor/catalog/pattern-api-path/src/api-path.ts",
+      "Remove files copied from primitive:staged-dataset-query:",
+      "  rm ./vendor/catalog/primitive-staged-dataset-query/src/staged-dataset-query.ts",
       "Remove added dependencies from package.json.",
       "Run verification to confirm clean state."
     ]

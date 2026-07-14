@@ -1,9 +1,9 @@
 {
-  "id": "install_1784015055505",
-  "installedAt": "2026-07-14T07:44:15.505Z",
+  "id": "install_1784016794356",
+  "installedAt": "2026-07-14T08:13:14.356Z",
   "catalog": {
     "source": "file://catalog/",
-    "assetId": "pattern:request-context",
+    "assetId": "pattern:provider-escape-hatch",
     "assetVersion": "experimental"
   },
   "target": {
@@ -11,10 +11,10 @@
   },
   "files": [
     {
-      "sourcePath": "src/request-context.ts",
-      "targetPath": "./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "sourcePath": "src/provider-contract.ts",
+      "targetPath": "./vendor/catalog/pattern-provider-escape-hatch/src/provider-contract.ts",
       "action": "copy",
-      "checksum": "e398d1af97d4a329374563ecccb0267c4b93cbf72cc7fae3df71c76337d36444"
+      "checksum": "0f149d41c5a6112bec80a88a563e74635af5459113ff9db4272d5916972506ea"
     }
   ],
   "dependenciesAdded": [],
@@ -25,20 +25,20 @@
   },
   "verification": [
     {
-      "command": "pnpm --dir catalog/blocks/request-context test",
+      "command": "pnpm --dir catalog/patterns/provider-escape-hatch test",
       "exitCode": null,
       "output": "not run at install time — run catalog.verify_install with execute:true"
     },
     {
-      "command": "pnpm --dir catalog/blocks/request-context typecheck",
+      "command": "pnpm --dir catalog/patterns/provider-escape-hatch typecheck",
       "exitCode": null,
       "output": "not run at install time — run catalog.verify_install with execute:true"
     }
   ],
   "rollback": {
     "instructions": [
-      "Remove files copied from pattern:request-context:",
-      "  rm ./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "Remove files copied from pattern:provider-escape-hatch:",
+      "  rm ./vendor/catalog/pattern-provider-escape-hatch/src/provider-contract.ts",
       "Remove added dependencies from package.json.",
       "Run verification to confirm clean state."
     ]

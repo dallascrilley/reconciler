@@ -1,9 +1,9 @@
 {
-  "id": "install_1784015055505",
-  "installedAt": "2026-07-14T07:44:15.505Z",
+  "id": "install_1784016794344",
+  "installedAt": "2026-07-14T08:13:14.344Z",
   "catalog": {
     "source": "file://catalog/",
-    "assetId": "pattern:request-context",
+    "assetId": "pattern:data-dictionary",
     "assetVersion": "experimental"
   },
   "target": {
@@ -11,10 +11,10 @@
   },
   "files": [
     {
-      "sourcePath": "src/request-context.ts",
-      "targetPath": "./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "sourcePath": "src/data-dictionary.ts",
+      "targetPath": "./vendor/catalog/pattern-data-dictionary/src/data-dictionary.ts",
       "action": "copy",
-      "checksum": "e398d1af97d4a329374563ecccb0267c4b93cbf72cc7fae3df71c76337d36444"
+      "checksum": "a8ee01a7f492b87938586c59b226398d9a4498f2e622a2b452743fe69f20413a"
     }
   ],
   "dependenciesAdded": [],
@@ -25,20 +25,20 @@
   },
   "verification": [
     {
-      "command": "pnpm --dir catalog/blocks/request-context test",
+      "command": "pnpm --dir catalog/patterns/data-dictionary test",
       "exitCode": null,
       "output": "not run at install time — run catalog.verify_install with execute:true"
     },
     {
-      "command": "pnpm --dir catalog/blocks/request-context typecheck",
+      "command": "pnpm --dir catalog/patterns/data-dictionary typecheck",
       "exitCode": null,
       "output": "not run at install time — run catalog.verify_install with execute:true"
     }
   ],
   "rollback": {
     "instructions": [
-      "Remove files copied from pattern:request-context:",
-      "  rm ./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "Remove files copied from pattern:data-dictionary:",
+      "  rm ./vendor/catalog/pattern-data-dictionary/src/data-dictionary.ts",
       "Remove added dependencies from package.json.",
       "Run verification to confirm clean state."
     ]

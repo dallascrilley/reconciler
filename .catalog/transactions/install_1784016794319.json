@@ -1,9 +1,9 @@
 {
-  "id": "install_1784015055505",
-  "installedAt": "2026-07-14T07:44:15.505Z",
+  "id": "install_1784016794319",
+  "installedAt": "2026-07-14T08:13:14.319Z",
   "catalog": {
     "source": "file://catalog/",
-    "assetId": "pattern:request-context",
+    "assetId": "pattern:action",
     "assetVersion": "experimental"
   },
   "target": {
@@ -11,13 +11,18 @@
   },
   "files": [
     {
-      "sourcePath": "src/request-context.ts",
-      "targetPath": "./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "sourcePath": "src/action.ts",
+      "targetPath": "./vendor/catalog/pattern-action/src/action.ts",
       "action": "copy",
-      "checksum": "e398d1af97d4a329374563ecccb0267c4b93cbf72cc7fae3df71c76337d36444"
+      "checksum": "4683b4a4b8a138b6431c676975621409a368680e93538c5ae86c983dbf0bde8e"
     }
   ],
-  "dependenciesAdded": [],
+  "dependenciesAdded": [
+    {
+      "name": "@standard-schema/spec",
+      "type": "dependency"
+    }
+  ],
   "adaptersSelected": [],
   "approval": {
     "approved": true,
@@ -25,20 +30,20 @@
   },
   "verification": [
     {
-      "command": "pnpm --dir catalog/blocks/request-context test",
+      "command": "pnpm --dir catalog/blocks/action test",
       "exitCode": null,
       "output": "not run at install time — run catalog.verify_install with execute:true"
     },
     {
-      "command": "pnpm --dir catalog/blocks/request-context typecheck",
+      "command": "pnpm --dir catalog/blocks/action typecheck",
       "exitCode": null,
       "output": "not run at install time — run catalog.verify_install with execute:true"
     }
   ],
   "rollback": {
     "instructions": [
-      "Remove files copied from pattern:request-context:",
-      "  rm ./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "Remove files copied from pattern:action:",
+      "  rm ./vendor/catalog/pattern-action/src/action.ts",
       "Remove added dependencies from package.json.",
       "Run verification to confirm clean state."
     ]

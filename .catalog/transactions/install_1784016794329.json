@@ -1,9 +1,9 @@
 {
-  "id": "install_1784015055505",
-  "installedAt": "2026-07-14T07:44:15.505Z",
+  "id": "install_1784016794329",
+  "installedAt": "2026-07-14T08:13:14.329Z",
   "catalog": {
     "source": "file://catalog/",
-    "assetId": "pattern:request-context",
+    "assetId": "primitive:apply-edits",
     "assetVersion": "experimental"
   },
   "target": {
@@ -11,10 +11,10 @@
   },
   "files": [
     {
-      "sourcePath": "src/request-context.ts",
-      "targetPath": "./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "sourcePath": "src/apply-edits.ts",
+      "targetPath": "./vendor/catalog/primitive-apply-edits/src/apply-edits.ts",
       "action": "copy",
-      "checksum": "e398d1af97d4a329374563ecccb0267c4b93cbf72cc7fae3df71c76337d36444"
+      "checksum": "181584e114af18ac434b309b32507486ea1622a1a14d35ea8319fd3ed613ce80"
     }
   ],
   "dependenciesAdded": [],
@@ -25,20 +25,25 @@
   },
   "verification": [
     {
-      "command": "pnpm --dir catalog/blocks/request-context test",
+      "command": "pnpm --dir catalog/primitives/apply-edits test",
       "exitCode": null,
       "output": "not run at install time — run catalog.verify_install with execute:true"
     },
     {
-      "command": "pnpm --dir catalog/blocks/request-context typecheck",
+      "command": "pnpm --dir catalog/primitives/apply-edits typecheck",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    },
+    {
+      "command": "pnpm --dir catalog/primitives/apply-edits example",
       "exitCode": null,
       "output": "not run at install time — run catalog.verify_install with execute:true"
     }
   ],
   "rollback": {
     "instructions": [
-      "Remove files copied from pattern:request-context:",
-      "  rm ./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "Remove files copied from primitive:apply-edits:",
+      "  rm ./vendor/catalog/primitive-apply-edits/src/apply-edits.ts",
       "Remove added dependencies from package.json.",
       "Run verification to confirm clean state."
     ]

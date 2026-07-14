@@ -7,7 +7,7 @@
     "assetVersion": "experimental"
   },
   "target": {
-    "projectRoot": "."
+    "projectRoot": "../.."
   },
   "files": [
     {

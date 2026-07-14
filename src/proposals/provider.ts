@@ -51,6 +51,42 @@ const PROPOSAL_PAYLOAD_SCHEMA = z.object({
   estimatedRecoveryCents: z.number().int().nonnegative(),
 });
 
+const COMMON_EVIDENCE_SCHEMA = {
+  month: z.string().regex(/^\d{4}-\d{2}$/),
+  agreementId: z.string().min(1),
+  invoiceId: z.string().min(1),
+  usageRecordId: z.string().min(1),
+};
+
+const EVIDENCE_SCHEMAS = {
+  create_unbilled_seat_adjustment: z.object({
+    ...COMMON_EVIDENCE_SCHEMA,
+    excessSeats: z.number().int().positive(),
+    expectedChargeCents: z.number().int().nonnegative(),
+  }),
+  create_missing_true_up: z.object({
+    ...COMMON_EVIDENCE_SCHEMA,
+    excessSeats: z.number().int().positive(),
+    expectedChargeCents: z.number().int().nonnegative(),
+  }),
+  correct_invoice_rate: z.object({
+    ...COMMON_EVIDENCE_SCHEMA,
+    invoiceLineId: z.string().min(1),
+    expectedRateCents: z.number().int().positive(),
+    invoicedRateCents: z.number().int().positive(),
+  }),
+  remove_duplicate_line_item: z.object({
+    ...COMMON_EVIDENCE_SCHEMA,
+    invoiceLineIds: z.array(z.string().min(1)).min(2),
+  }),
+  reconcile_agreement_invoice_quantity: z.object({
+    ...COMMON_EVIDENCE_SCHEMA,
+    invoiceLineId: z.string().min(1),
+    agreementQuantity: z.number().int().positive(),
+    invoicedQuantity: z.number().int().positive(),
+  }),
+} as const;
+
 export type ProposalDraft = {
   actionName: string;
   payload: Record<string, unknown>;
@@ -81,7 +117,10 @@ export function validateActionPayload(
   )) {
     throw new Error("Proposal payload does not match its finding");
   }
-  return parsed;
+  const evidenceSchema = Object.entries(EVIDENCE_SCHEMAS).find(([name]) => name === actionName)?.[1];
+  if (!evidenceSchema) throw new Error(`No evidence schema is registered for ${actionName}`);
+  const evidence = evidenceSchema.parse(parsed.evidence) as Record<string, unknown>;
+  return { ...parsed, evidence };
 }
 
 function validateDraft(input: ProposalInput, draft: ProposalDraft): ProposalDraft {

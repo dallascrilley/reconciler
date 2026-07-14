@@ -55,6 +55,7 @@ export async function createReconcilerServer(
   for (const finding of findings) {
     findingsByKind[finding.kind] = (findingsByKind[finding.kind] ?? 0) + 1;
   }
+  const findingById = new Map(findings.map((finding) => [finding.id, finding]));
 
   return createServer(async (request: IncomingMessage, response: ServerResponse) => {
     const path = new URL(request.url ?? "/", "http://localhost").pathname;
@@ -107,12 +108,33 @@ export async function createReconcilerServer(
     }
     if (request.method === "POST" && path === "/api/proposals") {
       try {
-        const parsed = proposalAction.schema.safeParse(await readJsonBody(request));
-        if (!parsed.success) {
-          sendJson(response, 400, { error: "validation_error", details: parsed.error.issues });
+        const body = await readJsonBody(request);
+        const requestedFindingId = body && typeof body === "object" && "findingId" in body
+          && typeof (body as Record<string, unknown>).findingId === "string"
+          ? (body as Record<string, string>).findingId
+          : null;
+        if (!requestedFindingId) {
+          sendJson(response, 400, { error: "findingId is required" });
           return;
         }
-        const proposal = await proposalAction.run(parsed.data, {});
+        const finding = findingById.get(requestedFindingId);
+        if (!finding) {
+          sendJson(response, 404, { error: "unknown_finding" });
+          return;
+        }
+        const existing = queue.listProposals().find((proposal) => proposal.findingId === finding.id);
+        if (existing) {
+          sendJson(response, 200, existing);
+          return;
+        }
+        const proposal = await proposalAction.run({
+          findingId: finding.id,
+          accountId: finding.accountId,
+          kind: finding.kind,
+          evidence: finding.evidence,
+          estimatedRecoveryCents: finding.estimatedRecoveryCents,
+          detectedAt: finding.detectedAt,
+        }, {});
         sendJson(response, 201, queue.addProposal(proposal));
       } catch (error) {
         sendJson(response, 400, { error: error instanceof Error ? error.message : "proposal_failed" });

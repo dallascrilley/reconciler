@@ -19,6 +19,26 @@ function requiredStringArray(value: unknown, field: string): string[] {
   return value as string[];
 }
 
+const IMMUTABLE_EVIDENCE_FIELDS = [
+  "month",
+  "agreementId",
+  "invoiceId",
+  "usageRecordId",
+  "invoiceLineId",
+  "invoiceLineIds",
+] as const;
+
+function assertEvidenceBound(
+  actionEvidence: Record<string, unknown>,
+  canonicalEvidence: Record<string, unknown>,
+): void {
+  for (const field of IMMUTABLE_EVIDENCE_FIELDS) {
+    if (canonicalEvidence[field] !== undefined && JSON.stringify(actionEvidence[field]) !== JSON.stringify(canonicalEvidence[field])) {
+      throw new Error(`Action evidence ${field} does not match the detected finding`);
+    }
+  }
+}
+
 export class BillingState {
   constructor(
     private readonly dataset: BillingDataset,
@@ -33,23 +53,31 @@ export class BillingState {
       accountId: finding.accountId,
       kind: finding.kind,
     });
-    const invoiceId = requiredString(originalPayload.evidence.invoiceId, "invoiceId");
+    assertEvidenceBound(originalPayload.evidence, finding.evidence);
+    const canonicalPayload: ProposalPayload = {
+      ...originalPayload,
+      evidence: finding.evidence,
+    };
+    const invoiceId = requiredString(canonicalPayload.evidence.invoiceId, "invoiceId");
     const invoice = this.dataset.invoices.find((candidate) => candidate.id === invoiceId);
     if (!invoice) throw new Error(`Cannot apply action to unknown invoice ${invoiceId}`);
+    if (invoice.accountId !== finding.accountId) {
+      throw new Error(`Invoice ${invoice.id} does not belong to finding account ${finding.accountId}`);
+    }
 
     switch (action.actionName) {
       case "create_unbilled_seat_adjustment":
       case "create_missing_true_up":
-        this.createTrueUpLine(invoice, originalPayload);
+        this.createTrueUpLine(invoice, canonicalPayload);
         break;
       case "correct_invoice_rate":
-        this.correctInvoiceRate(invoice, originalPayload);
+        this.correctInvoiceRate(invoice, canonicalPayload);
         break;
       case "remove_duplicate_line_item":
-        this.removeDuplicateLine(invoice, originalPayload);
+        this.removeDuplicateLine(invoice, canonicalPayload);
         break;
       case "reconcile_agreement_invoice_quantity":
-        this.reconcileInvoiceQuantity(invoice, originalPayload);
+        this.reconcileInvoiceQuantity(invoice, canonicalPayload);
         break;
       default:
         throw new Error(`Unsupported remediation action ${action.actionName}`);
@@ -61,6 +89,9 @@ export class BillingState {
     const agreementId = requiredString(payload.evidence.agreementId, "agreementId");
     const agreement = this.dataset.agreements.find((candidate) => candidate.id === agreementId);
     if (!agreement) throw new Error(`Cannot apply action to unknown agreement ${agreementId}`);
+    if (agreement.accountId !== invoice.accountId) {
+      throw new Error(`Agreement ${agreement.id} does not belong to invoice account ${invoice.accountId}`);
+    }
     const quantity = requiredPositiveInteger(payload.evidence.excessSeats, "excessSeats");
     if (this.dataset.invoiceLines.some((line) => line.invoiceId === invoice.id && line.description === "True-up seats")) {
       throw new Error(`Invoice ${invoice.id} already has a true-up line`);
