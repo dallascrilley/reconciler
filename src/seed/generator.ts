@@ -84,7 +84,11 @@ export function generateBillingDataset(input: SeedOptions = {}): BillingDataset 
     const plan = ["core", "growth", "scale"][index % 3] ?? "core";
     const monthlyRateCents = 9000 + random.integer(0, 9000);
     const includedSeats = 5 + random.integer(0, 10);
-    const trueUpRequired = plantedKind === "unbilled_seats" ? false : index % 2 === 0;
+    const trueUpRequired = plantedKind === "unbilled_seats"
+      ? false
+      : plantedKind === "missing_true_up"
+        ? true
+        : index % 2 === 0;
     const agreement: Agreement = {
       id: `agr-${sequence}`,
       accountId,

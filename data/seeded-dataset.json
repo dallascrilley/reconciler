@@ -1458,7 +1458,7 @@
       "accountId": "acct-004",
       "includedSeats": 13,
       "rateCents": 13705,
-      "trueUpRequired": false,
+      "trueUpRequired": true,
       "trueUpRateCents": 1490,
       "startsOn": "2025-01-01",
       "endsOn": "2026-12-31"
