@@ -33,6 +33,9 @@ describe("generateBillingDataset", () => {
       "acct-004",
       "acct-005",
     ]);
+    const missingTrueUp = dataset.groundTruth.find((entry) => entry.kind === "missing_true_up");
+    const missingAgreement = dataset.agreements.find((agreement) => agreement.id === missingTrueUp?.details.agreementId);
+    expect(missingAgreement?.trueUpRequired).toBe(true);
   });
 
   it("keeps invoice totals equal to their generated lines", () => {
@@ -53,5 +56,13 @@ describe("generateBillingDataset", () => {
 
     expect(first.accounts[0]?.monthlyRateCents).not.toBe(second.accounts[0]?.monthlyRateCents);
     expect(JSON.stringify(first.groundTruth)).not.toBe(JSON.stringify(second.groundTruth));
+  });
+  it("rejects duplicate and impossible calendar months", () => {
+    expect(() => generateBillingDataset({ months: ["2026-01", "2026-01"] })).toThrow(
+      "months must contain unique YYYY-MM values",
+    );
+    expect(() => generateBillingDataset({ months: ["2026-13"] })).toThrow(
+      "months must contain unique YYYY-MM values",
+    );
   });
 });

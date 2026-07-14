@@ -48,8 +48,13 @@ function assertSeedOptions(options: Required<SeedOptions>): void {
   if (!Number.isInteger(options.accountCount) || options.accountCount < PLANTED_KINDS.length) {
     throw new Error(`accountCount must be at least ${PLANTED_KINDS.length}`);
   }
-  if (options.months.length === 0 || options.months.some((month) => !/^\d{4}-\d{2}$/.test(month))) {
-    throw new Error("months must contain at least one YYYY-MM value");
+  const invalidMonth = options.months.some((month) => {
+    if (!/^\d{4}-\d{2}$/.test(month)) return true;
+    const monthNumber = Number(month.slice(5));
+    return monthNumber < 1 || monthNumber > 12;
+  });
+  if (options.months.length === 0 || invalidMonth || new Set(options.months).size !== options.months.length) {
+    throw new Error("months must contain unique YYYY-MM values with months from 01 through 12");
   }
 }
 

@@ -1,0 +1,70 @@
+{
+  "formatVersion": 1,
+  "source": {
+    "repository": "github.com/DallasCrilleyMarTech/ai-templates",
+    "revision": "f345b7918ccb5a9627fad90c9c79d4b7c5b786a7",
+    "replayWorkingDirectory": "ai-templates"
+  },
+  "entries": [
+    {
+      "id": "bootstrap",
+      "command": "node --experimental-strip-types scripts/bootstrap-reconciler.ts --target=../reconciler",
+      "targetDirectory": "../reconciler",
+      "executedAt": "2026-07-14T06:12:18.285Z",
+      "exitCode": 0,
+      "generatedFiles": [
+        "receipts/generated/analytics/README.generated.md",
+        "receipts/generated/analytics/analytics.blueprint.json",
+        "receipts/generated/analytics/app/components/template-shell.tsx",
+        "receipts/generated/analytics/app/lib/action-contract.ts",
+        "receipts/generated/analytics/app/lib/template-actions.ts",
+        "receipts/generated/analytics/app/routes.ts",
+        "receipts/generated/analytics/app/routes/_index.tsx",
+        "receipts/generated/analytics/app/routes/dashboard.tsx",
+        "receipts/generated/analytics/global.d.ts",
+        "receipts/generated/analytics/package.json",
+        "receipts/generated/analytics/plan.json",
+        "receipts/generated/analytics/scripts/prove-actions.mjs",
+        "receipts/generated/analytics/scripts/prove-runtime.mjs",
+        "receipts/generated/analytics/scripts/prove-tier-s.mjs",
+        "receipts/generated/analytics/server/entry.ts",
+        "receipts/generated/analytics/tsconfig.json",
+        "receipts/generated/forms/README.generated.md",
+        "receipts/generated/forms/app/components/template-shell.tsx",
+        "receipts/generated/forms/app/lib/action-contract.ts",
+        "receipts/generated/forms/app/lib/template-actions.ts",
+        "receipts/generated/forms/app/routes.ts",
+        "receipts/generated/forms/app/routes/_index.tsx",
+        "receipts/generated/forms/app/routes/f.$.tsx",
+        "receipts/generated/forms/forms.blueprint.json",
+        "receipts/generated/forms/global.d.ts",
+        "receipts/generated/forms/package.json",
+        "receipts/generated/forms/plan.json",
+        "receipts/generated/forms/scripts/prove-actions.mjs",
+        "receipts/generated/forms/scripts/prove-runtime.mjs",
+        "receipts/generated/forms/scripts/prove-tier-s.mjs",
+        "receipts/generated/forms/server/entry.ts",
+        "receipts/generated/forms/tsconfig.json"
+      ]
+    },
+    {
+      "id": "catalog-install",
+      "command": "node --experimental-strip-types scripts/install-reconciler-assets.ts --target=../reconciler",
+      "targetDirectory": "../reconciler",
+      "executedAt": "2026-07-14T06:12:20.277Z",
+      "exitCode": 0,
+      "installedAssets": [
+        "pattern:action",
+        "primitive:action-ui",
+        "primitive:apply-edits",
+        "pattern:request-context",
+        "pattern:api-path",
+        "pattern:dashboard-config",
+        "pattern:data-dictionary",
+        "primitive:staged-dataset-query",
+        "pattern:provider-escape-hatch",
+        "pattern:action-contract"
+      ]
+    }
+  ]
+}

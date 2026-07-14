@@ -1,0 +1,46 @@
+{
+  "id": "install_1784008771878",
+  "installedAt": "2026-07-14T05:59:31.878Z",
+  "catalog": {
+    "source": "file://catalog/",
+    "assetId": "pattern:request-context",
+    "assetVersion": "experimental"
+  },
+  "target": {
+    "projectRoot": "./.catalog/transactions"
+  },
+  "files": [
+    {
+      "sourcePath": "src/request-context.ts",
+      "targetPath": "./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "action": "copy",
+      "checksum": "e398d1af97d4a329374563ecccb0267c4b93cbf72cc7fae3df71c76337d36444"
+    }
+  ],
+  "dependenciesAdded": [],
+  "adaptersSelected": [],
+  "approval": {
+    "approved": true,
+    "reason": "Reconciler U0 scaffold: approved copy-first composition from forms + analytics blueprints"
+  },
+  "verification": [
+    {
+      "command": "pnpm --dir catalog/blocks/request-context test",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    },
+    {
+      "command": "pnpm --dir catalog/blocks/request-context typecheck",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    }
+  ],
+  "rollback": {
+    "instructions": [
+      "Remove files copied from pattern:request-context:",
+      "  rm ./vendor/catalog/pattern-request-context/src/request-context.ts",
+      "Remove added dependencies from package.json.",
+      "Run verification to confirm clean state."
+    ]
+  }
+}

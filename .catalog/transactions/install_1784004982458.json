@@ -7,12 +7,12 @@
     "assetVersion": "experimental"
   },
   "target": {
-    "projectRoot": "/Users/dallascrilley/Code/reconciler/.catalog/transactions"
+    "projectRoot": "./.catalog/transactions"
   },
   "files": [
     {
       "sourcePath": "src/apply-edits.ts",
-      "targetPath": "/Users/dallascrilley/Code/reconciler/vendor/catalog/primitive-apply-edits/src/apply-edits.ts",
+      "targetPath": "./vendor/catalog/primitive-apply-edits/src/apply-edits.ts",
       "action": "copy",
       "checksum": "181584e114af18ac434b309b32507486ea1622a1a14d35ea8319fd3ed613ce80"
     }
@@ -43,7 +43,7 @@
   "rollback": {
     "instructions": [
       "Remove files copied from primitive:apply-edits:",
-      "  rm /Users/dallascrilley/Code/reconciler/vendor/catalog/primitive-apply-edits/src/apply-edits.ts",
+      "  rm ./vendor/catalog/primitive-apply-edits/src/apply-edits.ts",
       "Remove added dependencies from package.json.",
       "Run verification to confirm clean state."
     ]
