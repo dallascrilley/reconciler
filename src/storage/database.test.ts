@@ -12,11 +12,12 @@ describe("LibSQL demo persistence", () => {
       const accounts = await client.execute("SELECT count(*) AS count FROM reconciler_accounts");
       const groundTruth = await client.execute("SELECT count(*) AS count FROM reconciler_ground_truth");
 
-      expect(meta).toEqual({
+      expect(meta).toMatchObject({
         generatedAt: dataset.generatedAt,
         months: JSON.stringify(dataset.months),
         seed: "91",
       });
+      expect(meta.updatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
       expect(Number(accounts.rows[0]?.count)).toBe(8);
       expect(Number(groundTruth.rows[0]?.count)).toBe(5);
     } finally {

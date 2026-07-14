@@ -14,6 +14,8 @@ The deployed staging instance runs on Coolify:
 
 The instance uses the deterministic synthetic dataset and contains no production data or credentials.
 
+`GET /` serves the public review dashboard with the visible proposal eval gate, failure drill-down, and approval controls.
+
 ## Run locally
 
 ```bash
@@ -22,7 +24,7 @@ pnpm reset
 pnpm dev
 ```
 
-The default server listens on `http://localhost:3000` (or `$PORT`). The keyless path uses deterministic canned proposals; set `RECONCILER_PROVIDER_API_KEY` and optionally `RECONCILER_PROVIDER_URL` to exercise the live proposal provider.
+The default server listens on `http://localhost:3000` (or `$PORT`). The keyless path uses deterministic canned proposals; set `RECONCILER_PROVIDER_API_KEY` and optionally `RECONCILER_PROVIDER_URL` to exercise the live proposal provider. Runtime state is loaded from LibSQL/Turso on startup and persisted after proposal and review mutations.
 
 Useful endpoints:
 
@@ -38,6 +40,8 @@ Useful endpoints:
 `pnpm seed` regenerates `data/seeded-dataset.json` and `data/ground-truth.json` using seed `20260713`. `pnpm reset:db` resets a LibSQL database with the same seeded corpus. Set `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` for a remote Turso database; without them, the reset command uses `data/reconciler.db`.
 
 The scheduled GitHub Actions workflow at `.github/workflows/demo-reset.yml` runs `pnpm reset:db` daily with those two repository secrets.
+
+The runtime refreshes from the database revision before requests, so the scheduled reset becomes visible without requiring a process restart. The pull-request workflow at `.github/workflows/verify.yml` runs typecheck and the proposal eval gate.
 
 ## Catalog composition receipts
 
