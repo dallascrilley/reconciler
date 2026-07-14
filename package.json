@@ -13,6 +13,7 @@
     "test:eval": "vitest run src/eval/*.test.ts",
     "seed": "tsx src/seed/cli.ts",
     "reset": "tsx src/seed/cli.ts --reset",
+    "reset:db": "tsx src/storage/reset-demo.ts",
     "verify": "pnpm typecheck && pnpm test && pnpm build"
   },
   "dependencies": {
