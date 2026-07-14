@@ -2,11 +2,12 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { BillingDataset, Finding, Proposal } from "./domain/types.js";
+import { BillingState } from "./billing/state.js";
 import { buildDashboardState } from "./analytics/dashboard.js";
 import { detectDiscrepancies } from "./findings/detectors.js";
-import { proposeFinding, createProposalProvider } from "./proposals/provider.js";
+import { proposeFinding, createProposalAction, createProposalProvider } from "./proposals/provider.js";
 import { createReviewAction } from "./review/actions.js";
-import { ReviewQueue } from "./review/queue.js";
+import { ReviewQueue, type ReviewQueueOptions } from "./review/queue.js";
 import { generateBillingDataset } from "./seed/generator.js";
 
 function sendJson(response: ServerResponse, status: number, body: unknown): void {
@@ -31,22 +32,24 @@ async function readJsonBody(request: IncomingMessage): Promise<unknown> {
   }
 }
 
-async function buildQueue(findings: Finding[]): Promise<ReviewQueue> {
+async function buildQueue(findings: Finding[], options: ReviewQueueOptions = {}): Promise<ReviewQueue> {
   const provider = createProposalProvider();
+  const results = await Promise.all(findings.map((finding) => proposeFinding(finding, provider)));
   const proposals: Proposal[] = [];
-  for (const finding of findings) {
-    const result = await proposeFinding(finding, provider);
+  for (const result of results) {
     if (!result.ok) throw new Error(result.error.message);
     proposals.push(result.data);
   }
-  return new ReviewQueue(proposals);
+  return new ReviewQueue(proposals, options);
 }
 
 export async function createReconcilerServer(
   dataset: BillingDataset = generateBillingDataset(),
 ): Promise<Server> {
   const findings = detectDiscrepancies(dataset);
-  const queue = await buildQueue(findings);
+  const billingState = new BillingState(dataset, findings);
+  const queue = await buildQueue(findings, { applyBillingAction: (action) => billingState.apply(action) });
+  const proposalAction = createProposalAction(createProposalProvider());
   const reviewAction = createReviewAction(queue);
   const findingsByKind: Record<string, number> = {};
   for (const finding of findings) {
@@ -81,6 +84,10 @@ export async function createReconcilerServer(
         sendJson(response, 200, findings);
         return;
       }
+      if (path === "/api/invoices") {
+        sendJson(response, 200, dataset.invoices);
+        return;
+      }
       if (path === "/api/proposals") {
         sendJson(response, 200, queue.listProposals());
         return;
@@ -97,6 +104,20 @@ export async function createReconcilerServer(
         sendJson(response, 200, queue.getAppliedBillingActions());
         return;
       }
+    }
+    if (request.method === "POST" && path === "/api/proposals") {
+      try {
+        const parsed = proposalAction.schema.safeParse(await readJsonBody(request));
+        if (!parsed.success) {
+          sendJson(response, 400, { error: "validation_error", details: parsed.error.issues });
+          return;
+        }
+        const proposal = await proposalAction.run(parsed.data, {});
+        sendJson(response, 201, queue.addProposal(proposal));
+      } catch (error) {
+        sendJson(response, 400, { error: error instanceof Error ? error.message : "proposal_failed" });
+      }
+      return;
     }
     if (request.method === "POST" && path === "/api/reviews") {
       try {

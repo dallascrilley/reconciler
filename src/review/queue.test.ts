@@ -7,7 +7,20 @@ const proposal: Proposal = {
   id: "proposal-finding-1",
   findingId: "finding-missing_true_up-acct-004-2026-01",
   actionName: "create_missing_true_up",
-  payload: { adjustmentCents: 5960 },
+  payload: {
+    findingId: "finding-missing_true_up-acct-004-2026-01",
+    accountId: "acct-004",
+    discrepancyKind: "missing_true_up",
+    evidence: {
+      agreementId: "agr-004",
+      invoiceId: "inv-004-2026-01",
+      usageRecordId: "usage-004-2026-01",
+      month: "2026-01",
+      excessSeats: 4,
+      expectedChargeCents: 5960,
+    },
+    estimatedRecoveryCents: 5960,
+  },
   rationale: "Create the missing true-up charge.",
   provider: "canned",
   status: "pending",
@@ -25,7 +38,13 @@ describe("ReviewQueue", () => {
     const edit = queue.review({
       proposalId: proposal.id,
       decision: "edit",
-      editedPayload: { adjustmentCents: 5900, note: "Human correction" },
+      editedPayload: {
+        findingId: proposal.findingId,
+        accountId: "acct-004",
+        discrepancyKind: "missing_true_up",
+        evidence: proposal.payload.evidence,
+        estimatedRecoveryCents: 5900,
+      },
       reviewer: "reviewer@example.com",
     });
     expect(edit.proposal.status).toBe("edited");
@@ -39,15 +58,43 @@ describe("ReviewQueue", () => {
     });
     expect(approval.proposal.status).toBe("approved");
     expect(approval.appliedBillingAction?.payload).toEqual({
-      adjustmentCents: 5900,
-      note: "Human correction",
+      findingId: proposal.findingId,
+      accountId: "acct-004",
+      discrepancyKind: "missing_true_up",
+      evidence: proposal.payload.evidence,
+      estimatedRecoveryCents: 5900,
     });
+
     expect(queue.getAppliedBillingActions()).toHaveLength(1);
     expect(queue.getAuditLog().map((event) => event.event)).toEqual([
       "proposal_created",
       "review_edited",
       "review_approved",
     ]);
+  });
+
+  it("records the edited payload when an edited proposal is rejected", () => {
+    const queue = createQueue();
+    const editedPayload = {
+      findingId: proposal.findingId,
+      accountId: "acct-004",
+      discrepancyKind: "missing_true_up",
+      evidence: proposal.payload.evidence,
+      estimatedRecoveryCents: 5900,
+    };
+    queue.review({
+      proposalId: proposal.id,
+      decision: "edit",
+      editedPayload,
+      reviewer: "reviewer@example.com",
+    });
+    queue.review({
+      proposalId: proposal.id,
+      decision: "reject",
+      reviewer: "reviewer@example.com",
+    });
+
+    expect(queue.getAuditLog().at(-1)?.payload).toEqual({ payload: editedPayload });
   });
 
   it("rejects a proposal without applying a billing mutation", () => {

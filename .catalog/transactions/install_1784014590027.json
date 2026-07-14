@@ -1,0 +1,46 @@
+{
+  "id": "install_1784014590027",
+  "installedAt": "2026-07-14T07:36:30.027Z",
+  "catalog": {
+    "source": "file://catalog/",
+    "assetId": "pattern:data-dictionary",
+    "assetVersion": "experimental"
+  },
+  "target": {
+    "projectRoot": "."
+  },
+  "files": [
+    {
+      "sourcePath": "src/data-dictionary.ts",
+      "targetPath": "./vendor/catalog/pattern-data-dictionary/src/data-dictionary.ts",
+      "action": "copy",
+      "checksum": "a8ee01a7f492b87938586c59b226398d9a4498f2e622a2b452743fe69f20413a"
+    }
+  ],
+  "dependenciesAdded": [],
+  "adaptersSelected": [],
+  "approval": {
+    "approved": true,
+    "reason": "Reconciler U0 scaffold: approved copy-first composition from forms + analytics blueprints"
+  },
+  "verification": [
+    {
+      "command": "pnpm --dir catalog/patterns/data-dictionary test",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    },
+    {
+      "command": "pnpm --dir catalog/patterns/data-dictionary typecheck",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    }
+  ],
+  "rollback": {
+    "instructions": [
+      "Remove files copied from pattern:data-dictionary:",
+      "  rm ./vendor/catalog/pattern-data-dictionary/src/data-dictionary.ts",
+      "Remove added dependencies from package.json.",
+      "Run verification to confirm clean state."
+    ]
+  }
+}

@@ -44,7 +44,20 @@ describe("proposal provider", () => {
         return new Response(JSON.stringify({
           choices: [{ message: { content: JSON.stringify({
             actionName: "create_missing_true_up",
-            payload: { adjustmentCents: 5960 },
+            payload: {
+              findingId: "finding-missing_true_up-acct-004-2026-01",
+              accountId: "acct-004",
+              discrepancyKind: "missing_true_up",
+              evidence: {
+                agreementId: "agr-004",
+                invoiceId: "inv-004-2026-01",
+                usageRecordId: "usage-004-2026-01",
+                month: "2026-01",
+                excessSeats: 4,
+                expectedChargeCents: 5960,
+              },
+              estimatedRecoveryCents: 5960,
+            },
             rationale: "Apply the missing true-up charge.",
           }) } }],
         }), { status: 200 });

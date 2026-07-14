@@ -41,6 +41,8 @@
   "handwrittenFiles": [
     "src/analytics/dashboard.test.ts",
     "src/analytics/dashboard.ts",
+    "src/billing/state.test.ts",
+    "src/billing/state.ts",
     "src/domain/types.ts",
     "src/eval/evaluate.test.ts",
     "src/eval/evaluate.ts",

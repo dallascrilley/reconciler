@@ -4,7 +4,7 @@ import { runSafe } from "../../vendor/catalog/pattern-action-contract/src/action
 import type { ProviderCatalogEntry } from "../../vendor/catalog/pattern-provider-escape-hatch/src/provider-contract.js";
 import type { DiscrepancyKind, Finding, Proposal } from "../domain/types.js";
 
-const ACTION_BY_KIND: Record<DiscrepancyKind, string> = {
+export const ACTION_BY_KIND: Record<DiscrepancyKind, string> = {
   unbilled_seats: "create_unbilled_seat_adjustment",
   stale_rate: "correct_invoice_rate",
   duplicate_line_item: "remove_duplicate_line_item",
@@ -29,6 +29,28 @@ const PROPOSAL_INPUT_SCHEMA = z.object({
 
 type ProposalInput = z.infer<typeof PROPOSAL_INPUT_SCHEMA>;
 
+export type ProposalPayload = {
+  findingId: string;
+  accountId: string;
+  discrepancyKind: DiscrepancyKind;
+  evidence: Record<string, unknown>;
+  estimatedRecoveryCents: number;
+};
+
+const PROPOSAL_PAYLOAD_SCHEMA = z.object({
+  findingId: z.string().min(1),
+  accountId: z.string().min(1),
+  discrepancyKind: z.enum([
+    "unbilled_seats",
+    "stale_rate",
+    "duplicate_line_item",
+    "missing_true_up",
+    "agreement_invoice_drift",
+  ]),
+  evidence: z.record(z.string(), z.unknown()),
+  estimatedRecoveryCents: z.number().int().nonnegative(),
+});
+
 export type ProposalDraft = {
   actionName: string;
   payload: Record<string, unknown>;
@@ -39,6 +61,40 @@ export type ProposalDraft = {
 export interface ProposalProvider {
   readonly id: Proposal["provider"];
   propose(input: ProposalInput): Promise<ProposalDraft>;
+}
+
+export function validateActionPayload(
+  actionName: string,
+  payload: unknown,
+  expected?: { findingId: string; accountId: string; kind: DiscrepancyKind },
+): ProposalPayload {
+  const expectedKind = (Object.entries(ACTION_BY_KIND).find(([, name]) => name === actionName)?.[0] ?? null) as DiscrepancyKind | null;
+  if (!expectedKind) throw new Error(`Unknown remediation action ${actionName}`);
+  const parsed = PROPOSAL_PAYLOAD_SCHEMA.parse(payload);
+  if (parsed.discrepancyKind !== expectedKind) {
+    throw new Error(`Action ${actionName} does not match discrepancy kind ${parsed.discrepancyKind}`);
+  }
+  if (expected && (
+    parsed.findingId !== expected.findingId ||
+    parsed.accountId !== expected.accountId ||
+    parsed.discrepancyKind !== expected.kind
+  )) {
+    throw new Error("Proposal payload does not match its finding");
+  }
+  return parsed;
+}
+
+function validateDraft(input: ProposalInput, draft: ProposalDraft): ProposalDraft {
+  const expectedActionName = ACTION_BY_KIND[input.kind];
+  if (draft.actionName !== expectedActionName) {
+    throw new Error(`Proposal action ${draft.actionName} does not match ${expectedActionName}`);
+  }
+  const payload = validateActionPayload(draft.actionName, draft.payload, {
+    findingId: input.findingId,
+    accountId: input.accountId,
+    kind: input.kind,
+  });
+  return { ...draft, payload };
 }
 
 const PROVIDER_CATALOG: ProviderCatalogEntry = {
@@ -64,7 +120,7 @@ export class CannedProposalProvider implements ProposalProvider {
   readonly id = "canned" as const;
 
   async propose(input: ProposalInput): Promise<ProposalDraft> {
-    return {
+    return validateDraft(input, {
       actionName: ACTION_BY_KIND[input.kind],
       payload: {
         findingId: input.findingId,
@@ -75,7 +131,7 @@ export class CannedProposalProvider implements ProposalProvider {
       },
       rationale: `Canned remediation for ${input.kind}; verify the linked evidence before approval.`,
       provider: this.id,
-    };
+    });
   }
 }
 
@@ -84,17 +140,21 @@ export class LiveProposalProvider implements ProposalProvider {
   private readonly apiKey: string;
   private readonly url: string;
   private readonly fetcher: typeof fetch;
+  private readonly timeoutMs: number;
 
-  constructor(apiKey: string, options: { url?: string; fetcher?: typeof fetch } = {}) {
+  constructor(apiKey: string, options: { url?: string; fetcher?: typeof fetch; timeoutMs?: number } = {}) {
     if (!apiKey.trim()) throw new Error("A non-empty provider API key is required");
     this.apiKey = apiKey;
     this.url = options.url ?? `${PROVIDER_CATALOG.baseUrl}${PROVIDER_CATALOG.endpoints[0]?.path ?? "/v1/chat/completions"}`;
     this.fetcher = options.fetcher ?? fetch;
+    this.timeoutMs = options.timeoutMs ?? 10_000;
+    if (!Number.isInteger(this.timeoutMs) || this.timeoutMs < 1) throw new Error("Provider timeout must be a positive integer");
   }
 
   async propose(input: ProposalInput): Promise<ProposalDraft> {
     const response = await this.fetcher(this.url, {
       method: "POST",
+      signal: AbortSignal.timeout(this.timeoutMs),
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${this.apiKey}`,
@@ -130,7 +190,7 @@ export class LiveProposalProvider implements ProposalProvider {
       payload: z.record(z.string(), z.unknown()),
       rationale: z.string().min(1),
     }).parse(parsed);
-    return { ...result, provider: this.id };
+    return validateDraft(input, { ...result, provider: this.id });
   }
 }
 
@@ -154,7 +214,7 @@ export function createProposalAction(
     readOnly: true,
     http: { method: "POST", path: "/api/proposals" },
     async run(input) {
-      const draft = await provider.propose(input);
+      const draft = validateDraft(input, await provider.propose(input));
       return {
         id: `proposal-${input.findingId}`,
         findingId: input.findingId,
