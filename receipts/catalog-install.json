@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-14T06:12:20.277Z",
+  "generatedAt": "2026-07-14T06:28:07.027Z",
   "command": "node --experimental-strip-types scripts/install-reconciler-assets.ts --target=../reconciler",
   "source": {
     "repository": "github.com/DallasCrilleyMarTech/ai-templates",
-    "revision": "f345b7918ccb5a9627fad90c9c79d4b7c5b786a7",
+    "revision": "c537684c873b77693f3414017af207888badac0e",
     "replayWorkingDirectory": "ai-templates"
   },
   "approval": "Reconciler U0 scaffold: approved copy-first composition from forms + analytics blueprints",
@@ -37,7 +37,7 @@
       "result": {
         "installed": 1,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539630.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486635.json"
       }
     },
     {
@@ -59,7 +59,7 @@
       "result": {
         "installed": 1,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539655.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486649.json"
       }
     },
     {
@@ -81,7 +81,7 @@
       "result": {
         "installed": 1,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539718.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486660.json"
       }
     },
     {
@@ -103,7 +103,7 @@
       "result": {
         "installed": 1,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539781.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486668.json"
       }
     },
     {
@@ -124,7 +124,7 @@
       "result": {
         "installed": 1,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539786.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486680.json"
       }
     },
     {
@@ -145,7 +145,7 @@
       "result": {
         "installed": 1,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539790.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486685.json"
       }
     },
     {
@@ -166,7 +166,7 @@
       "result": {
         "installed": 1,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539794.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486710.json"
       }
     },
     {
@@ -186,7 +186,7 @@
       "result": {
         "installed": 1,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539799.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486726.json"
       }
     },
     {
@@ -207,7 +207,7 @@
       "result": {
         "installed": 1,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539805.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486740.json"
       }
     },
     {
@@ -235,7 +235,7 @@
       "result": {
         "installed": 3,
         "skipped": 0,
-        "transactionLogPath": ".catalog/transactions/install_1784009539811.json"
+        "transactionLogPath": ".catalog/transactions/install_1784010486753.json"
       }
     }
   ],

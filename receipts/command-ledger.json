@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "source": {
     "repository": "github.com/DallasCrilleyMarTech/ai-templates",
-    "revision": "f345b7918ccb5a9627fad90c9c79d4b7c5b786a7",
+    "revision": "c537684c873b77693f3414017af207888badac0e",
     "replayWorkingDirectory": "ai-templates"
   },
   "entries": [
@@ -10,7 +10,7 @@
       "id": "bootstrap",
       "command": "node --experimental-strip-types scripts/bootstrap-reconciler.ts --target=../reconciler",
       "targetDirectory": "../reconciler",
-      "executedAt": "2026-07-14T06:12:18.285Z",
+      "executedAt": "2026-07-14T06:28:05.415Z",
       "exitCode": 0,
       "generatedFiles": [
         "receipts/generated/analytics/README.generated.md",
@@ -51,7 +51,7 @@
       "id": "catalog-install",
       "command": "node --experimental-strip-types scripts/install-reconciler-assets.ts --target=../reconciler",
       "targetDirectory": "../reconciler",
-      "executedAt": "2026-07-14T06:12:20.277Z",
+      "executedAt": "2026-07-14T06:28:07.027Z",
       "exitCode": 0,
       "installedAssets": [
         "pattern:action",

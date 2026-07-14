@@ -2,6 +2,7 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { BillingDataset, Finding, Proposal } from "./domain/types.js";
+import { buildDashboardState } from "./analytics/dashboard.js";
 import { detectDiscrepancies } from "./findings/detectors.js";
 import { proposeFinding, createProposalProvider } from "./proposals/provider.js";
 import { createReviewAction } from "./review/actions.js";
@@ -57,6 +58,10 @@ export async function createReconcilerServer(
     if (request.method === "GET") {
       if (path === "/health") {
         sendJson(response, 200, { ok: true, service: "reconciler" });
+        return;
+      }
+      if (path === "/api/dashboard") {
+        sendJson(response, 200, buildDashboardState(dataset, findings, queue));
         return;
       }
       if (path === "/api/summary") {

@@ -39,7 +39,11 @@
   ],
   "handwrittenRoot": "src",
   "handwrittenFiles": [
+    "src/analytics/dashboard.test.ts",
+    "src/analytics/dashboard.ts",
     "src/domain/types.ts",
+    "src/eval/evaluate.test.ts",
+    "src/eval/evaluate.ts",
     "src/findings/detectors.test.ts",
     "src/findings/detectors.ts",
     "src/proposals/provider.test.ts",
