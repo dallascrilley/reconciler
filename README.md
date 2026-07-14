@@ -4,6 +4,16 @@ Reconciler is a public synthetic billing-reconciliation workbench. It detects de
 
 This is a synthetic rebuild inspired by the shape of a private Meter billing audit. It contains no production customer data, credentials, or billing records.
 
+## Live demo
+
+The deployed staging instance runs on Coolify:
+
+- **URL:** http://up6cq0ickmyuycbsb0btq3b3.5.161.80.184.sslip.io
+- **Health:** `GET /health`
+- **Runtime:** Node.js via Nixpacks on the `rnpr-internal` Coolify server
+
+The instance uses the deterministic synthetic dataset and contains no production data or credentials.
+
 ## Run locally
 
 ```bash
