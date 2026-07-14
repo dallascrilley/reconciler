@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "primitive:action-ui",
+  "name": "Action UI Metadata",
+  "kind": "primitive",
+  "tier": "copy-first",
+  "summary": "Action UI Metadata copy-first generated block.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "../agent-native/packages/core/src/action-ui.ts"
+    ],
+    "version": "@agent-native/core@0.79.19"
+  },
+  "provides": [
+    "action-ui",
+    "action-chat-ui-config"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "devDependencies": [
+    "vitest",
+    "typescript",
+    "@types/node"
+  ],
+  "files": [
+    "src/action-ui.ts"
+  ],
+  "tests": [
+    "tests/action-ui.test.ts"
+  ],
+  "examples": [
+    "examples/basic.ts"
+  ],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/blocks/action-ui test",
+      "pnpm --dir catalog/blocks/action-ui typecheck"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "@dallascrilleymartech/app-base"
+    ]
+  },
+  "caveats": [
+    "Only stores renderer metadata; it does not provide renderer components."
+  ],
+  "whenNotToUse": [
+    "Do not use as a UI component library; pair with shadcn for actual UI."
+  ],
+  "tags": [
+    "actions",
+    "ui-metadata",
+    "copy-first"
+  ],
+  "generatedFrom": "src/action-ui.ts"
+}

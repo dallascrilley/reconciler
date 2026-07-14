@@ -1,0 +1,32 @@
+{
+  "name": "reconciler",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A public synthetic billing-reconciliation workbench with deterministic findings, agent proposals, and human review.",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:eval": "vitest run src/eval/*.test.ts",
+    "seed": "tsx src/seed/cli.ts",
+    "reset": "tsx src/seed/cli.ts --reset",
+    "verify": "pnpm typecheck && pnpm test && pnpm build"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.15",
+    "@standard-schema/spec": "^1.1.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.1",
+    "tsx": "^4.19.4",
+    "typescript": "^6.0.3",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

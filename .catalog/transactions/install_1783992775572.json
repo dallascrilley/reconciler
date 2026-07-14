@@ -1,0 +1,65 @@
+{
+  "id": "install_1783992775572",
+  "installedAt": "2026-07-14T01:32:55.572Z",
+  "catalog": {
+    "source": "file://catalog/",
+    "assetId": "pattern:action-contract",
+    "assetVersion": "experimental"
+  },
+  "target": {
+    "projectRoot": "/Users/dallascrilley/Code/reconciler/.catalog/transactions"
+  },
+  "files": [
+    {
+      "sourcePath": "src/action-contract.ts",
+      "targetPath": "/Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-action-contract/src/action-contract.ts",
+      "action": "copy",
+      "checksum": "b5e4e71538e983dd2fd7b266a3295e3c06823fd0d4713ec1db998bb6a4e7d994"
+    },
+    {
+      "sourcePath": "src/action-registry.ts",
+      "targetPath": "/Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-action-contract/src/action-registry.ts",
+      "action": "copy",
+      "checksum": "7862ef9e6304243ba2928d0c9d20fdb003c5351a7a39cdc3d3e94730826a12f2"
+    },
+    {
+      "sourcePath": "src/index.ts",
+      "targetPath": "/Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-action-contract/src/index.ts",
+      "action": "copy",
+      "checksum": "513f1e994bd837d9cade07c96901ae258b2b3a321bb5ca4fae59ab0c0158d40e"
+    }
+  ],
+  "dependenciesAdded": [
+    {
+      "name": "zod",
+      "type": "dependency"
+    }
+  ],
+  "adaptersSelected": [],
+  "approval": {
+    "approved": true,
+    "reason": "Reconciler U0 scaffold: approved copy-first composition from forms + analytics blueprints"
+  },
+  "verification": [
+    {
+      "command": "pnpm --dir catalog/patterns/action-contract test",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    },
+    {
+      "command": "pnpm --dir catalog/patterns/action-contract typecheck",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    }
+  ],
+  "rollback": {
+    "instructions": [
+      "Remove files copied from pattern:action-contract:",
+      "  rm /Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-action-contract/src/action-contract.ts",
+      "  rm /Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-action-contract/src/action-registry.ts",
+      "  rm /Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-action-contract/src/index.ts",
+      "Remove added dependencies from package.json.",
+      "Run verification to confirm clean state."
+    ]
+  }
+}

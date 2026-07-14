@@ -1,0 +1,74 @@
+{
+  "name": "Forms Recreation Canary",
+  "appType": "forms",
+  "capabilities": [
+    "schema-validated-actions",
+    "safe-text-editing",
+    "action-ui",
+    "request-context",
+    "app-path"
+  ],
+  "frontend": "react-router",
+  "server": "h3",
+  "storage": "sqlite",
+  "verification": {
+    "typecheck": true
+  },
+  "requiredAssets": [
+    "pattern:action",
+    "primitive:action-ui",
+    "primitive:apply-edits",
+    "pattern:request-context",
+    "pattern:api-path"
+  ],
+  "composition": {
+    "packageName": "forms-recreation-canary",
+    "rootRoute": "/f/demo-feedback",
+    "domainActions": [
+      {
+        "id": "get-public-form",
+        "description": "Load the public fill surface for the composed Forms screen.",
+        "readOnly": true
+      },
+      {
+        "id": "submit-form-response",
+        "description": "Submit a public response for the composed Forms screen.",
+        "readOnly": false
+      }
+    ],
+    "routes": [
+      {
+        "path": "/_index",
+        "kind": "index",
+        "purpose": "Forms home redirect stub"
+      },
+      {
+        "path": "f.$",
+        "kind": "route",
+        "purpose": "Forms public fill shadcn screen"
+      }
+    ]
+  },
+  "missingCapabilities": [],
+  "acceptance": {
+    "target": "forms",
+    "stages": [
+      {
+        "stage": "L0",
+        "requirement": "Scaffold installs and typechecks with zero @agent-native/core imports and app-base as the runtime dependency."
+      },
+      {
+        "stage": "L1",
+        "requirement": "SSR boots and serves the public fill route."
+      },
+      {
+        "stage": "L2",
+        "requirement": "Forms actions register and execute through the copy-first action kernel."
+      },
+      {
+        "stage": "L3",
+        "requirement": "Forms route -> action -> result renders a public-fill shadcn screen and submission flow."
+      }
+    ]
+  }
+}

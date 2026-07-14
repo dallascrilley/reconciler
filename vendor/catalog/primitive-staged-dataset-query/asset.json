@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "primitive:staged-dataset-query",
+  "name": "Staged Dataset Query",
+  "kind": "primitive",
+  "tier": "copy-first",
+  "summary": "In-process filter/project/group/aggregate/order/limit query engine for staged API data with pluggable storage adapter.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "analytics/actions/query-staged-dataset.ts"
+    ],
+    "notes": "Extracted from Analytics staged-dataset-query action. Core is dependency-free with storage adapter interface."
+  },
+  "provides": [
+    "staged-data-query",
+    "in-memory-aggregation"
+  ],
+  "requires": [],
+  "adaptsTo": [
+    "node"
+  ],
+  "dependencies": [],
+  "peerDependencies": [],
+  "devDependencies": [
+    "vitest"
+  ],
+  "files": [
+    "src/staged-dataset-query.ts"
+  ],
+  "tests": [
+    "tests/staged-dataset-query.test.ts"
+  ],
+  "examples": [],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/primitives/staged-dataset-query test"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "design/",
+      "analytics/",
+      "dispatch/"
+    ]
+  },
+  "caveats": [
+    "In-memory storage is for testing only; implement StagedDatasetStorage interface for production persistence."
+  ],
+  "whenNotToUse": [
+    "Do not use for SQL-backed datasets with existing query infrastructure."
+  ],
+  "tags": [
+    "query",
+    "aggregation",
+    "filtering",
+    "staging",
+    "dataset"
+  ]
+}

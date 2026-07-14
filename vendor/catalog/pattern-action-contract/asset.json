@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "pattern:action-contract",
+  "name": "Action Contract",
+  "kind": "pattern",
+  "tier": "copy-first",
+  "summary": "Framework-free action contract with zod schema validation, registry, context injection, and structured error handling.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "design/actions/*.ts (defineAction pattern)",
+      "analytics/actions/*.ts",
+      "dispatch/actions/*.ts"
+    ],
+    "notes": "Extracted from the defineAction pattern used across all three apps. Removes agent-native, H3, React Query, and app-state dependencies."
+  },
+  "provides": [
+    "action-contract",
+    "action-registry",
+    "schema-validated-actions"
+  ],
+  "requires": [],
+  "adaptsTo": [
+    "node",
+    "browser",
+    "agent-tools"
+  ],
+  "dependencies": [
+    "zod"
+  ],
+  "peerDependencies": [],
+  "devDependencies": [
+    "vitest"
+  ],
+  "files": [
+    "src/action-contract.ts",
+    "src/action-registry.ts",
+    "src/index.ts"
+  ],
+  "tests": [
+    "tests/action-contract.test.ts"
+  ],
+  "examples": [
+    "examples/basic.ts"
+  ],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/patterns/action-contract test",
+      "pnpm --dir catalog/patterns/action-contract typecheck"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "design/",
+      "analytics/",
+      "dispatch/"
+    ]
+  },
+  "caveats": [
+    "ExecutionContext typing is generic; extend TContext for your app's request/session shape.",
+    "Mutation retry safety: do not replay after a mutating action execution."
+  ],
+  "whenNotToUse": [
+    "Do not use when actions need implicit request-context — context must be injected explicitly.",
+    "Do not use when the framework's native action system (e.g. agent-native defineAction) provides sufficient value for your use case."
+  ],
+  "tags": [
+    "actions",
+    "pattern",
+    "contract",
+    "zod",
+    "validation",
+    "registry"
+  ]
+}

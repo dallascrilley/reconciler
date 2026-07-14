@@ -1,0 +1,175 @@
+{
+  "blueprint": {
+    "name": "Analytics Recreation Canary",
+    "appType": "analytics",
+    "capabilities": [
+      "schema-validated-actions",
+      "dashboard-config-model",
+      "data-dictionary-context",
+      "staged-data-query",
+      "provider-contract",
+      "request-context"
+    ],
+    "frontend": "react-router",
+    "server": "h3",
+    "storage": "sqlite",
+    "verification": {
+      "typecheck": true
+    },
+    "requiredAssets": [
+      "pattern:action",
+      "pattern:dashboard-config",
+      "pattern:data-dictionary",
+      "primitive:staged-dataset-query",
+      "pattern:provider-escape-hatch",
+      "pattern:request-context"
+    ],
+    "composition": {
+      "packageName": "analytics-recreation-canary",
+      "rootRoute": "/dashboard",
+      "domainActions": [
+        {
+          "id": "load-dashboard",
+          "description": "Load dashboard rows for the composed Analytics screen.",
+          "readOnly": true
+        },
+        {
+          "id": "refresh-dashboard-query",
+          "description": "Refresh the staged dashboard query.",
+          "readOnly": false
+        }
+      ],
+      "routes": [
+        {
+          "path": "/_index",
+          "kind": "index",
+          "purpose": "Analytics home redirect stub"
+        },
+        {
+          "path": "dashboard",
+          "kind": "route",
+          "purpose": "Analytics chart-rendering shadcn screen"
+        }
+      ]
+    },
+    "missingCapabilities": [],
+    "acceptance": {
+      "target": "analytics",
+      "stages": [
+        {
+          "stage": "L0",
+          "requirement": "Scaffold installs and typechecks with zero @agent-native/core imports and app-base as the runtime dependency."
+        },
+        {
+          "stage": "L1",
+          "requirement": "SSR boots and serves the analytics route."
+        },
+        {
+          "stage": "L2",
+          "requirement": "Analytics actions register and execute through the copy-first action kernel."
+        },
+        {
+          "stage": "L3",
+          "requirement": "Analytics route -> action -> result renders one chart-rendering shadcn screen and refresh flow."
+        }
+      ]
+    }
+  },
+  "selectedAssets": [
+    "pattern:action",
+    "pattern:dashboard-config",
+    "pattern:data-dictionary",
+    "primitive:staged-dataset-query",
+    "pattern:provider-escape-hatch",
+    "pattern:request-context"
+  ],
+  "installs": [
+    {
+      "assetId": "pattern:action",
+      "targetPath": "vendor/pattern-action",
+      "files": [
+        "src/action.ts"
+      ],
+      "dependencies": [
+        "@standard-schema/spec"
+      ],
+      "verificationCommands": [
+        "tsc --noEmit"
+      ]
+    },
+    {
+      "assetId": "pattern:dashboard-config",
+      "targetPath": "vendor/pattern-dashboard-config",
+      "files": [
+        "src/dashboard-config.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "tsc --noEmit"
+      ]
+    },
+    {
+      "assetId": "pattern:data-dictionary",
+      "targetPath": "vendor/pattern-data-dictionary",
+      "files": [
+        "src/data-dictionary.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "tsc --noEmit"
+      ]
+    },
+    {
+      "assetId": "primitive:staged-dataset-query",
+      "targetPath": "vendor/primitive-staged-dataset-query",
+      "files": [
+        "src/staged-dataset-query.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "tsc --noEmit"
+      ]
+    },
+    {
+      "assetId": "pattern:provider-escape-hatch",
+      "targetPath": "vendor/pattern-provider-escape-hatch",
+      "files": [
+        "src/provider-contract.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "tsc --noEmit"
+      ]
+    },
+    {
+      "assetId": "pattern:request-context",
+      "targetPath": "vendor/pattern-request-context",
+      "files": [
+        "src/request-context.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "tsc --noEmit"
+      ]
+    }
+  ],
+  "warnings": [],
+  "unresolvedCapabilities": [],
+  "generatedFiles": [
+    "package.json",
+    "tsconfig.json",
+    "global.d.ts",
+    "analytics.blueprint.json",
+    "app/routes.ts",
+    "app/components/template-shell.tsx",
+    "app/lib/action-contract.ts",
+    "app/lib/template-actions.ts",
+    "server/entry.ts",
+    "scripts/prove-actions.mjs",
+    "scripts/prove-runtime.mjs",
+    "scripts/prove-tier-s.mjs",
+    "app/routes/_index.tsx",
+    "app/routes/dashboard.tsx"
+  ],
+  "generatedAt": "2026-07-14T04:14:25.576Z"
+}

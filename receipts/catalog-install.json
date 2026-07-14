@@ -1,0 +1,238 @@
+{
+  "generatedAt": "2026-07-14T04:56:22.790Z",
+  "command": "node --experimental-strip-types scripts/install-reconciler-assets.ts",
+  "approval": "Reconciler U0 scaffold: approved copy-first composition from forms + analytics blueprints",
+  "blueprints": [
+    "forms",
+    "analytics"
+  ],
+  "installs": [
+    {
+      "assetId": "pattern:action",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/pattern-action",
+      "blueprints": [
+        "forms:Action Kernel",
+        "analytics:Action Kernel",
+        "reconciler:typed-action-proposal-contract"
+      ],
+      "selectedFiles": [
+        "src/action.ts"
+      ],
+      "dependencies": [
+        {
+          "name": "@standard-schema/spec",
+          "type": "dependency"
+        }
+      ],
+      "verificationCommands": [
+        "pnpm --dir catalog/blocks/action test",
+        "pnpm --dir catalog/blocks/action typecheck"
+      ],
+      "result": {
+        "installed": 1,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982045.json"
+      }
+    },
+    {
+      "assetId": "primitive:action-ui",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/primitive-action-ui",
+      "blueprints": [
+        "forms:Action UI Metadata",
+        "reconciler:typed-action-proposal-contract"
+      ],
+      "selectedFiles": [
+        "src/action-ui.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "pnpm --dir catalog/blocks/action-ui test",
+        "pnpm --dir catalog/blocks/action-ui typecheck"
+      ],
+      "result": {
+        "installed": 1,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982188.json"
+      }
+    },
+    {
+      "assetId": "primitive:apply-edits",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/primitive-apply-edits",
+      "blueprints": [
+        "forms:Apply Edits"
+      ],
+      "selectedFiles": [
+        "src/apply-edits.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "pnpm --dir catalog/primitives/apply-edits test",
+        "pnpm --dir catalog/primitives/apply-edits typecheck",
+        "pnpm --dir catalog/primitives/apply-edits example"
+      ],
+      "result": {
+        "installed": 1,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982458.json"
+      }
+    },
+    {
+      "assetId": "pattern:request-context",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/pattern-request-context",
+      "blueprints": [
+        "forms:Request Context",
+        "analytics:Request Context"
+      ],
+      "selectedFiles": [
+        "src/request-context.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "pnpm --dir catalog/blocks/request-context test",
+        "pnpm --dir catalog/blocks/request-context typecheck"
+      ],
+      "result": {
+        "installed": 1,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982549.json"
+      }
+    },
+    {
+      "assetId": "pattern:api-path",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/pattern-api-path",
+      "blueprints": [
+        "forms:API Path Helpers"
+      ],
+      "selectedFiles": [
+        "src/api-path.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "pnpm --dir catalog/blocks/api-path test",
+        "pnpm --dir catalog/blocks/api-path typecheck"
+      ],
+      "result": {
+        "installed": 1,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982564.json"
+      }
+    },
+    {
+      "assetId": "pattern:dashboard-config",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/pattern-dashboard-config",
+      "blueprints": [
+        "analytics:Dashboard Config"
+      ],
+      "selectedFiles": [
+        "src/dashboard-config.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "pnpm --dir catalog/patterns/dashboard-config test",
+        "pnpm --dir catalog/patterns/dashboard-config typecheck"
+      ],
+      "result": {
+        "installed": 1,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982569.json"
+      }
+    },
+    {
+      "assetId": "pattern:data-dictionary",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/pattern-data-dictionary",
+      "blueprints": [
+        "analytics:Data Dictionary"
+      ],
+      "selectedFiles": [
+        "src/data-dictionary.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "pnpm --dir catalog/patterns/data-dictionary test",
+        "pnpm --dir catalog/patterns/data-dictionary typecheck"
+      ],
+      "result": {
+        "installed": 1,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982573.json"
+      }
+    },
+    {
+      "assetId": "primitive:staged-dataset-query",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/primitive-staged-dataset-query",
+      "blueprints": [
+        "analytics:Staged Dataset Query"
+      ],
+      "selectedFiles": [
+        "src/staged-dataset-query.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "pnpm --dir catalog/primitives/staged-dataset-query test"
+      ],
+      "result": {
+        "installed": 1,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982645.json"
+      }
+    },
+    {
+      "assetId": "pattern:provider-escape-hatch",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/pattern-provider-escape-hatch",
+      "blueprints": [
+        "analytics:Provider Escape Hatch"
+      ],
+      "selectedFiles": [
+        "src/provider-contract.ts"
+      ],
+      "dependencies": [],
+      "verificationCommands": [
+        "pnpm --dir catalog/patterns/provider-escape-hatch test",
+        "pnpm --dir catalog/patterns/provider-escape-hatch typecheck"
+      ],
+      "result": {
+        "installed": 1,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982729.json"
+      }
+    },
+    {
+      "assetId": "pattern:action-contract",
+      "source": "catalog/",
+      "targetDir": "vendor/catalog/pattern-action-contract",
+      "blueprints": [
+        "reconciler:typed-action-proposal-contract"
+      ],
+      "selectedFiles": [
+        "src/action-contract.ts",
+        "src/action-registry.ts",
+        "src/index.ts"
+      ],
+      "dependencies": [
+        {
+          "name": "zod",
+          "type": "dependency"
+        }
+      ],
+      "verificationCommands": [
+        "pnpm --dir catalog/patterns/action-contract test",
+        "pnpm --dir catalog/patterns/action-contract typecheck"
+      ],
+      "result": {
+        "installed": 3,
+        "skipped": 0,
+        "transactionLogPath": ".catalog/transactions/install_1784004982768.json"
+      }
+    }
+  ],
+  "transactionDirectory": ".catalog/transactions"
+}

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "primitive:apply-edits",
+  "name": "Apply Edits",
+  "kind": "primitive",
+  "tier": "copy-first",
+  "summary": "Apply unique search/replace edits with exact and whitespace-flexible matching.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "design/shared/apply-edits.ts",
+      "design/shared/apply-edits.spec.ts"
+    ],
+    "notes": "Extracted from Design edit-design flow; standalone copy removes Design-specific action wording."
+  },
+  "provides": [
+    "safe-text-editing",
+    "agentic-artifact-refinement"
+  ],
+  "requires": [],
+  "adaptsTo": [
+    "node",
+    "browser",
+    "agent-tools"
+  ],
+  "dependencies": [],
+  "peerDependencies": [],
+  "files": [
+    "src/apply-edits.ts"
+  ],
+  "tests": [
+    "tests/apply-edits.test.ts"
+  ],
+  "examples": [
+    "examples/basic.ts"
+  ],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/primitives/apply-edits test",
+      "pnpm --dir catalog/primitives/apply-edits typecheck",
+      "pnpm --dir catalog/primitives/apply-edits example"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "design/",
+      "analytics/",
+      "dispatch/"
+    ]
+  },
+  "caveats": [
+    "Caller owns persistence and atomicity across files."
+  ],
+  "whenNotToUse": [
+    "Do not use for AST-aware code refactors.",
+    "Do not use when multiple files must be changed atomically."
+  ],
+  "tags": [
+    "editing",
+    "html",
+    "agentic-workflow"
+  ]
+}

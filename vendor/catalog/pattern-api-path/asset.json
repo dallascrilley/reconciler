@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "pattern:api-path",
+  "name": "API Path Helpers",
+  "kind": "pattern",
+  "tier": "copy-first",
+  "summary": "API Path Helpers copy-first generated block.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "../agent-native/packages/core/src/client/api-path.ts"
+    ],
+    "version": "@agent-native/core@0.79.19"
+  },
+  "provides": [
+    "app-path",
+    "app-api-path",
+    "agent-native-path"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "devDependencies": [
+    "vitest",
+    "typescript",
+    "@types/node"
+  ],
+  "files": [
+    "src/api-path.ts"
+  ],
+  "tests": [
+    "tests/api-path.test.ts"
+  ],
+  "examples": [
+    "examples/basic.ts"
+  ],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/blocks/api-path test",
+      "pnpm --dir catalog/blocks/api-path typecheck"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "@dallascrilleymartech/app-base"
+    ]
+  },
+  "caveats": [
+    "The copy-first projection removes the embed-auth side-effect import; if your host relies on embed auth interception, wire it explicitly before fetch calls."
+  ],
+  "whenNotToUse": [
+    "Do not use as a router; it only builds base-path-aware URLs."
+  ],
+  "tags": [
+    "routing",
+    "base-path",
+    "api",
+    "copy-first"
+  ],
+  "generatedFrom": "src/api-path.ts"
+}

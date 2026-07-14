@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "pattern:provider-escape-hatch",
+  "name": "Provider Escape Hatch",
+  "kind": "pattern",
+  "tier": "copy-first",
+  "summary": "Framework-free provider contract for describing external API capabilities, validating outbound URLs, and redacting sensitive response data.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "analytics/actions/provider-api-request.ts",
+      "analytics/actions/_provider-action-utils.ts"
+    ],
+    "notes": "Extracted from Analytics provider API request patterns. Keeps the contract, SSRF checks, and redaction boundaries without app bindings."
+  },
+  "provides": [
+    "provider-contract",
+    "ssrf-validation",
+    "response-redaction"
+  ],
+  "requires": [],
+  "adaptsTo": [
+    "node",
+    "server-actions",
+    "agent-tools"
+  ],
+  "dependencies": [],
+  "peerDependencies": [],
+  "devDependencies": [
+    "vitest"
+  ],
+  "files": [
+    "src/provider-contract.ts"
+  ],
+  "tests": [
+    "tests/provider-contract.test.ts"
+  ],
+  "examples": [
+    "examples/basic.ts"
+  ],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/patterns/provider-escape-hatch test",
+      "pnpm --dir catalog/patterns/provider-escape-hatch typecheck"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "design/",
+      "analytics/",
+      "dispatch/"
+    ]
+  },
+  "caveats": [
+    "Credential resolution remains an interface; concrete secret storage stays app-local.",
+    "URL validation is hostname and private-network based, not a full outbound proxy policy."
+  ],
+  "whenNotToUse": [
+    "Do not use when the target integration already has a narrower typed SDK that makes direct HTTP escape hatches unnecessary.",
+    "Do not use when outbound requests need browser-only APIs or streaming bodies not covered by this contract."
+  ],
+  "tags": [
+    "provider",
+    "http",
+    "ssrf",
+    "redaction",
+    "credentials",
+    "pattern"
+  ]
+}

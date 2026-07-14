@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "pattern:action",
+  "name": "Action Kernel",
+  "kind": "pattern",
+  "tier": "copy-first",
+  "summary": "Action Kernel copy-first curated block.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "../agent-native/packages/core/src/action.ts"
+    ],
+    "version": "@agent-native/core@0.79.19"
+  },
+  "provides": [
+    "action-kernel",
+    "define-action",
+    "schema-validated-actions"
+  ],
+  "requires": [
+    "action-ui"
+  ],
+  "dependencies": [
+    "@standard-schema/spec"
+  ],
+  "devDependencies": [
+    "vitest",
+    "typescript",
+    "@types/node"
+  ],
+  "files": [
+    "src/action.ts"
+  ],
+  "tests": [
+    "tests/action.test.ts"
+  ],
+  "examples": [
+    "examples/basic.ts"
+  ],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/blocks/action test",
+      "pnpm --dir catalog/blocks/action typecheck"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "@dallascrilleymartech/app-base",
+      "drizzle-orm",
+      "@libsql/client",
+      "@modelcontextprotocol/sdk",
+      "electron",
+      "node-pty",
+      "ws",
+      "yjs"
+    ]
+  },
+  "caveats": [
+    "Audit attachment is disabled in the copy-first projection; wire durable audit logging in the host app if needed."
+  ],
+  "whenNotToUse": [
+    "Do not use when you want the full Agent Native runtime, audit pipeline, or automatic action discovery."
+  ],
+  "tags": [
+    "actions",
+    "kernel",
+    "schema",
+    "copy-first"
+  ],
+  "generatedFrom": "src/action.ts"
+}

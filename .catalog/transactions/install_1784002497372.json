@@ -1,0 +1,46 @@
+{
+  "id": "install_1784002497372",
+  "installedAt": "2026-07-14T04:14:57.372Z",
+  "catalog": {
+    "source": "file://catalog/",
+    "assetId": "pattern:api-path",
+    "assetVersion": "experimental"
+  },
+  "target": {
+    "projectRoot": "/Users/dallascrilley/Code/reconciler/.catalog/transactions"
+  },
+  "files": [
+    {
+      "sourcePath": "src/api-path.ts",
+      "targetPath": "/Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-api-path/src/api-path.ts",
+      "action": "copy",
+      "checksum": "f9942871a815d2fcbcee5dc0f7fb84cc8b2c6c98df474a81964b79191d2cbf96"
+    }
+  ],
+  "dependenciesAdded": [],
+  "adaptersSelected": [],
+  "approval": {
+    "approved": true,
+    "reason": "Reconciler U0 scaffold: approved copy-first composition from forms + analytics blueprints"
+  },
+  "verification": [
+    {
+      "command": "pnpm --dir catalog/blocks/api-path test",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    },
+    {
+      "command": "pnpm --dir catalog/blocks/api-path typecheck",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    }
+  ],
+  "rollback": {
+    "instructions": [
+      "Remove files copied from pattern:api-path:",
+      "  rm /Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-api-path/src/api-path.ts",
+      "Remove added dependencies from package.json.",
+      "Run verification to confirm clean state."
+    ]
+  }
+}

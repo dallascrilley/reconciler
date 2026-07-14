@@ -1,0 +1,79 @@
+{
+  "seed": 20260713,
+  "generatedAt": "2026-01-01T00:00:00.000Z",
+  "accountCount": 202,
+  "months": [
+    "2026-01",
+    "2026-02",
+    "2026-03"
+  ],
+  "cases": [
+    {
+      "id": "truth-001-unbilled_seats",
+      "accountId": "acct-001",
+      "kind": "unbilled_seats",
+      "details": {
+        "month": "2026-01",
+        "agreementId": "agr-001",
+        "usageRecordId": "usage-001-2026-01",
+        "invoiceId": "inv-001-2026-01",
+        "excessSeats": 3,
+        "expectedChargeCents": 5760
+      }
+    },
+    {
+      "id": "truth-002-stale_rate",
+      "accountId": "acct-002",
+      "kind": "stale_rate",
+      "details": {
+        "month": "2026-01",
+        "agreementId": "agr-002",
+        "usageRecordId": "usage-002-2026-01",
+        "invoiceId": "inv-002-2026-01",
+        "expectedRateCents": 11935,
+        "invoicedRateCents": 11435
+      }
+    },
+    {
+      "id": "truth-003-duplicate_line_item",
+      "accountId": "acct-003",
+      "kind": "duplicate_line_item",
+      "details": {
+        "month": "2026-01",
+        "agreementId": "agr-003",
+        "usageRecordId": "usage-003-2026-01",
+        "invoiceId": "inv-003-2026-01",
+        "duplicateLineIds": [
+          "line-003-2026-01-base",
+          "line-003-2026-01-duplicate"
+        ]
+      }
+    },
+    {
+      "id": "truth-004-missing_true_up",
+      "accountId": "acct-004",
+      "kind": "missing_true_up",
+      "details": {
+        "month": "2026-01",
+        "agreementId": "agr-004",
+        "usageRecordId": "usage-004-2026-01",
+        "invoiceId": "inv-004-2026-01",
+        "excessSeats": 4,
+        "expectedChargeCents": 5960
+      }
+    },
+    {
+      "id": "truth-005-agreement_invoice_drift",
+      "accountId": "acct-005",
+      "kind": "agreement_invoice_drift",
+      "details": {
+        "month": "2026-01",
+        "agreementId": "agr-005",
+        "usageRecordId": "usage-005-2026-01",
+        "invoiceId": "inv-005-2026-01",
+        "agreementQuantity": 12,
+        "invoicedQuantity": 11
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "pattern:dashboard-config",
+  "name": "Dashboard Config Model",
+  "kind": "pattern",
+  "tier": "copy-first",
+  "summary": "Pure types for SQL-powered dashboard configs, panels, filters, and catalog/install/merge mechanics.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "analytics/app/pages/adhoc/sql-dashboard/types.ts",
+      "analytics/server/lib/dashboard-catalog.ts"
+    ],
+    "notes": "Extracted from Analytics dashboard system. Core types are dependency-free."
+  },
+  "provides": [
+    "dashboard-config-model",
+    "dashboard-catalog-template"
+  ],
+  "requires": [],
+  "adaptsTo": [
+    "analytics",
+    "bi"
+  ],
+  "dependencies": [],
+  "peerDependencies": [],
+  "devDependencies": [
+    "vitest"
+  ],
+  "files": [
+    "src/dashboard-config.ts"
+  ],
+  "tests": [
+    "tests/dashboard-config.test.ts"
+  ],
+  "examples": [],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/patterns/dashboard-config test",
+      "pnpm --dir catalog/patterns/dashboard-config typecheck"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "design/",
+      "analytics/",
+      "dispatch/"
+    ]
+  },
+  "caveats": [
+    "Validation helpers (clampColumns) are not BI-specific; panel rendering logic remains app-local."
+  ],
+  "whenNotToUse": [
+    "Do not use when the target BI tool has a fundamentally different config model (e.g., graph-based, not panel-based)."
+  ],
+  "tags": [
+    "dashboard",
+    "config",
+    "analytics",
+    "bi",
+    "panels"
+  ]
+}

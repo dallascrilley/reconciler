@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "pattern:request-context",
+  "name": "Request Context",
+  "kind": "pattern",
+  "tier": "copy-first",
+  "summary": "Request Context copy-first generated block.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "../agent-native/packages/core/src/server/request-context.ts"
+    ],
+    "version": "@agent-native/core@0.79.19"
+  },
+  "provides": [
+    "request-context",
+    "credential-context",
+    "request-run-context"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "devDependencies": [
+    "vitest",
+    "typescript",
+    "@types/node"
+  ],
+  "files": [
+    "src/request-context.ts"
+  ],
+  "tests": [
+    "tests/request-context.test.ts"
+  ],
+  "examples": [
+    "examples/basic.ts"
+  ],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/blocks/request-context test",
+      "pnpm --dir catalog/blocks/request-context typecheck"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "@dallascrilleymartech/app-base"
+    ]
+  },
+  "caveats": [
+    "Requires Node AsyncLocalStorage; edge runtimes without node:async_hooks need a host-specific adapter."
+  ],
+  "whenNotToUse": [
+    "Do not use in purely static/browser-only code."
+  ],
+  "tags": [
+    "request",
+    "async-local-storage",
+    "context",
+    "copy-first"
+  ],
+  "generatedFrom": "src/request-context.ts"
+}

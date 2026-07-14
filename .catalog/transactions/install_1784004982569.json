@@ -1,0 +1,46 @@
+{
+  "id": "install_1784004982569",
+  "installedAt": "2026-07-14T04:56:22.569Z",
+  "catalog": {
+    "source": "file://catalog/",
+    "assetId": "pattern:dashboard-config",
+    "assetVersion": "experimental"
+  },
+  "target": {
+    "projectRoot": "/Users/dallascrilley/Code/reconciler/.catalog/transactions"
+  },
+  "files": [
+    {
+      "sourcePath": "src/dashboard-config.ts",
+      "targetPath": "/Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-dashboard-config/src/dashboard-config.ts",
+      "action": "copy",
+      "checksum": "b0f42fb41c2d8763ec1cce2962fc321240731d5a6a702dc71bdc408bfaaf1a55"
+    }
+  ],
+  "dependenciesAdded": [],
+  "adaptersSelected": [],
+  "approval": {
+    "approved": true,
+    "reason": "Reconciler U0 scaffold: approved copy-first composition from forms + analytics blueprints"
+  },
+  "verification": [
+    {
+      "command": "pnpm --dir catalog/patterns/dashboard-config test",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    },
+    {
+      "command": "pnpm --dir catalog/patterns/dashboard-config typecheck",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    }
+  ],
+  "rollback": {
+    "instructions": [
+      "Remove files copied from pattern:dashboard-config:",
+      "  rm /Users/dallascrilley/Code/reconciler/vendor/catalog/pattern-dashboard-config/src/dashboard-config.ts",
+      "Remove added dependencies from package.json.",
+      "Run verification to confirm clean state."
+    ]
+  }
+}

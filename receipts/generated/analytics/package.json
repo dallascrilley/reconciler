@@ -1,0 +1,26 @@
+{
+  "name": "analytics-recreation-canary",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "prove-actions": "node --experimental-strip-types scripts/prove-actions.mjs",
+    "prove-runtime": "node --import=tsx/esm scripts/prove-runtime.mjs",
+    "prove-tier-s": "node --import=tsx/esm scripts/prove-tier-s.mjs"
+  },
+  "dependencies": {
+    "@dallascrilleymartech/app-base": "workspace:*",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router": "^8.0.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@react-router/dev": "^8.0.1",
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "tsx": "^4.20.3",
+    "typescript": "^6.0.3"
+  }
+}

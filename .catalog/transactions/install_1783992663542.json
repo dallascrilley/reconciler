@@ -1,0 +1,51 @@
+{
+  "id": "install_1783992663542",
+  "installedAt": "2026-07-14T01:31:03.542Z",
+  "catalog": {
+    "source": "file://catalog/",
+    "assetId": "primitive:apply-edits",
+    "assetVersion": "experimental"
+  },
+  "target": {
+    "projectRoot": "/Users/dallascrilley/Code/reconciler/.catalog/transactions"
+  },
+  "files": [
+    {
+      "sourcePath": "src/apply-edits.ts",
+      "targetPath": "/Users/dallascrilley/Code/reconciler/vendor/catalog/primitive-apply-edits/src/apply-edits.ts",
+      "action": "copy",
+      "checksum": "181584e114af18ac434b309b32507486ea1622a1a14d35ea8319fd3ed613ce80"
+    }
+  ],
+  "dependenciesAdded": [],
+  "adaptersSelected": [],
+  "approval": {
+    "approved": true,
+    "reason": "Reconciler U0 scaffold: approved copy-first composition from forms + analytics blueprints"
+  },
+  "verification": [
+    {
+      "command": "pnpm --dir catalog/primitives/apply-edits test",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    },
+    {
+      "command": "pnpm --dir catalog/primitives/apply-edits typecheck",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    },
+    {
+      "command": "pnpm --dir catalog/primitives/apply-edits example",
+      "exitCode": null,
+      "output": "not run at install time — run catalog.verify_install with execute:true"
+    }
+  ],
+  "rollback": {
+    "instructions": [
+      "Remove files copied from primitive:apply-edits:",
+      "  rm /Users/dallascrilley/Code/reconciler/vendor/catalog/primitive-apply-edits/src/apply-edits.ts",
+      "Remove added dependencies from package.json.",
+      "Run verification to confirm clean state."
+    ]
+  }
+}

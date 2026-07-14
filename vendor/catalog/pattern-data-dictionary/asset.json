@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "pattern:data-dictionary",
+  "name": "Data Dictionary and Receipts",
+  "kind": "pattern",
+  "tier": "copy-first",
+  "summary": "Data dictionary context renderer with trust tiers and analytics answer receipt schema.",
+  "stability": "experimental",
+  "language": "typescript",
+  "source": {
+    "origin": [
+      "analytics/server/lib/data-dictionary-context.ts",
+      "analytics/actions/data-dictionary-trust.ts"
+    ],
+    "notes": "Extracted from Analytics data dictionary and receipt patterns. Core is dependency-free."
+  },
+  "provides": [
+    "data-dictionary-context",
+    "analytics-receipt"
+  ],
+  "requires": [],
+  "adaptsTo": [
+    "analytics",
+    "bi",
+    "agent-context"
+  ],
+  "dependencies": [],
+  "peerDependencies": [],
+  "devDependencies": [
+    "vitest"
+  ],
+  "files": [
+    "src/data-dictionary.ts"
+  ],
+  "tests": [
+    "tests/data-dictionary.test.ts"
+  ],
+  "examples": [],
+  "copyMode": "copy",
+  "verification": {
+    "commands": [
+      "pnpm --dir catalog/patterns/data-dictionary test",
+      "pnpm --dir catalog/patterns/data-dictionary typecheck"
+    ],
+    "forbiddenImports": [
+      "@agent-native/core",
+      "design/",
+      "analytics/",
+      "dispatch/"
+    ]
+  },
+  "caveats": [
+    "Receipt validation only checks structural fields, not semantic correctness."
+  ],
+  "whenNotToUse": [
+    "Do not use when dictionary data comes from a non-metric data source (e.g., user profiles)."
+  ],
+  "tags": [
+    "dictionary",
+    "data",
+    "receipt",
+    "analytics",
+    "trust"
+  ]
+}
