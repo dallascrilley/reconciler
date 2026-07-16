@@ -23,9 +23,17 @@ export type ReviewResult = {
   appliedBillingAction: AppliedBillingAction | null;
 };
 
+export type ReviewQueueSnapshot = {
+  proposals: Proposal[];
+  reviews: Review[];
+  auditLog: AuditEvent[];
+  appliedBillingActions: AppliedBillingAction[];
+};
+
 export type ReviewQueueOptions = {
   now?: () => string;
   applyBillingAction?: (action: AppliedBillingAction) => void;
+  initialState?: ReviewQueueSnapshot;
 };
 
 export class ReviewQueue {
@@ -39,16 +47,31 @@ export class ReviewQueue {
   constructor(proposals: Proposal[], options: ReviewQueueOptions = {}) {
     this.now = options.now ?? (() => new Date().toISOString());
     this.applyBillingAction = options.applyBillingAction;
+    if (options.initialState) {
+      for (const proposal of proposals) {
+        this.validateProposal(proposal);
+        this.proposals.set(proposal.id, structuredClone(proposal));
+      }
+      this.reviews.push(...structuredClone(options.initialState.reviews));
+      this.auditLog.push(...structuredClone(options.initialState.auditLog));
+      this.appliedBillingActions.push(...structuredClone(options.initialState.appliedBillingActions));
+      return;
+    }
     for (const proposal of proposals) this.addProposal(proposal);
+  }
+
+  snapshot(): ReviewQueueSnapshot {
+    return {
+      proposals: this.listProposals(),
+      reviews: this.listReviews(),
+      auditLog: this.getAuditLog(),
+      appliedBillingActions: this.getAppliedBillingActions(),
+    };
   }
 
   addProposal(proposal: Proposal): Proposal {
     if (this.proposals.has(proposal.id)) throw new Error(`Duplicate proposal ${proposal.id}`);
-    validateActionPayload(proposal.actionName, proposal.payload, {
-      findingId: proposal.findingId,
-      accountId: String(proposal.payload.accountId),
-      kind: proposal.payload.discrepancyKind as DiscrepancyKind,
-    });
+    this.validateProposal(proposal);
     this.proposals.set(proposal.id, structuredClone(proposal));
     this.auditLog.push({
       id: `audit-proposal-${proposal.id}`,
@@ -60,6 +83,14 @@ export class ReviewQueue {
       createdAt: proposal.createdAt,
     });
     return structuredClone(proposal);
+  }
+
+  private validateProposal(proposal: Proposal): void {
+    validateActionPayload(proposal.actionName, proposal.payload, {
+      findingId: proposal.findingId,
+      accountId: String(proposal.payload.accountId),
+      kind: proposal.payload.discrepancyKind as DiscrepancyKind,
+    });
   }
 
   getProposal(proposalId: string): Proposal {
