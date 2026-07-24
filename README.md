@@ -37,11 +37,11 @@ Useful endpoints:
 
 ## Deterministic seed and persistence
 
-`pnpm seed` regenerates `data/seeded-dataset.json` and `data/ground-truth.json` using seed `20260713`. `pnpm reset:db` resets a LibSQL database with the same seeded corpus. Set `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` for a remote Turso database; without them, the reset command uses `data/reconciler.db`.
+`pnpm seed` regenerates `data/seeded-dataset.json` and `data/ground-truth.json` using seed `20260713`. `pnpm reset:db` resets a LibSQL database with the same seeded corpus. Set `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` for a remote Turso database; without them, the runtime uses `data/reconciler.db`.
 
-The scheduled GitHub Actions workflow at `.github/workflows/demo-reset.yml` runs `pnpm reset:db` daily with those two repository secrets.
+The scheduled GitHub Actions workflow at `.github/workflows/demo-reset.yml` redeploys the Coolify application from `main` each day. A clean deployment recreates the local LibSQL dataset, then the workflow verifies the public dashboard, fresh five-item review queue, zero applied actions, and 5/5 eval gate. Its configuration is documented in `docs/credentials.md`.
 
-The runtime refreshes from the database revision before requests, so the scheduled reset becomes visible without requiring a process restart. The pull-request workflow at `.github/workflows/verify.yml` runs typecheck and the proposal eval gate.
+When a remote Turso database is configured, the runtime also refreshes from the database revision before requests. The pull-request workflow at `.github/workflows/verify.yml` runs typecheck and the proposal eval gate.
 
 ## Catalog composition receipts
 
