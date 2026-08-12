@@ -14,14 +14,11 @@ pnpm dev
 
 Open `http://localhost:3000`. The keyless path uses deterministic canned proposals; set `RECONCILER_PROVIDER_API_KEY` and optionally `RECONCILER_PROVIDER_URL` to exercise the live proposal provider. Runtime state is loaded from LibSQL/Turso on startup and persisted after proposal and review mutations.
 
-## Staging dashboard (optional)
+## Local dashboard
 
-A long-lived staging instance runs the same synthetic dataset (no production data):
-
-- URL: `http://up6cq0ickmyuycbsb0btq3b3.5.161.80.184.sslip.io`
-- Health: `GET /health`
-
-Prefer the local path above for evaluation. Staging is reset daily from `main` (see `.github/workflows/demo-reset.yml`).
+Run the project locally with the commands above, then open
+`http://localhost:3000`. The keyless path loads the synthetic dataset without
+external services.
 
 Useful endpoints:
 

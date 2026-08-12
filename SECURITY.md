@@ -10,21 +10,19 @@ correspondingly small.
 
 Every account, invoice, and finding in this repository is generated from a
 fixed seed (`20260713`). There is no real customer data, no real billing data,
-and no real money movement anywhere in the corpus or the live demo. The dollar
-figures shown in the dashboard are synthetic.
+and no real money movement anywhere in the corpus. The dollar figures shown in
+the dashboard are synthetic.
 
 Please do not add real data to this repository.
 
 ## No accounts, no authentication
 
-The demo has no user accounts, no login, no sessions, and no authorization
-layer. It stores no personal data and no credentials belonging to visitors.
+The local demo has no user accounts, no login, no sessions, and no
+authorization layer. It stores no personal data or visitor credentials.
 
 Because there are no accounts, the review endpoints are unauthenticated by
-design: anyone can approve, edit, or reject a proposal in the public demo. That
-is intended for a demo over synthetic data and is not a vulnerability report we
-need. The demo redeploys from a clean seed on a daily schedule, so any state a
-visitor creates is temporary.
+design. That is suitable only for a local demo over synthetic data and is not
+a vulnerability report we need.
 
 Do not deploy this code as-is anywhere it would front real billing data. It
 would need authentication, authorization, and an audit trail tied to real

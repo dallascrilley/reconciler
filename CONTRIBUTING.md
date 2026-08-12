@@ -39,18 +39,11 @@ Continuous integration is `.github/workflows/verify.yml`, which runs
 every pull request. `pnpm test:eval` is a subset of `pnpm test`, so run the
 full suite locally.
 
-## The demo redeploys on a schedule
+## Local demo state
 
-`.github/workflows/demo-reset.yml` redeploys the public demo from `main` on a
-daily schedule. A clean deployment recreates the local LibSQL dataset from the
-deterministic seed, which means:
-
-- Any state you create by clicking through the live demo is temporary and will
-  be reset.
-- Anything merged to `main` reaches the public demo on the next scheduled
-  redeploy without a separate release step.
-
-Keep that in mind when changing the seed, the dataset, or the review queue.
+`pnpm reset` recreates the local LibSQL dataset from the deterministic seed.
+Run it before evaluating changes to the seed, dataset, or review queue. No
+public hosted demo is currently maintained.
 
 ## Data
 
