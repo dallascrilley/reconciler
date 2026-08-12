@@ -4,15 +4,6 @@ Reconciler is a public synthetic billing-reconciliation workbench. It detects de
 
 This is a synthetic rebuild inspired by the shape of a private Meter billing audit. It contains no production customer data, credentials, or billing records.
 
-## Live demo
-
-A public staging dashboard is up with the deterministic synthetic dataset (no production data or credentials):
-
-- **Dashboard:** http://up6cq0ickmyuycbsb0btq3b3.5.161.80.184.sslip.io
-- **Health:** `GET /health` → `{"ok":true,"service":"reconciler",...}`
-
-`GET /` is the review UI: proposal eval gate, failure drill-down, and approve/edit/reject controls. A scheduled workflow redeploys from `main` daily and resets the queue to a fresh five-item review state (see `.github/workflows/demo-reset.yml`).
-
 ## Run locally
 
 ```bash
@@ -21,7 +12,16 @@ pnpm reset
 pnpm dev
 ```
 
-The default server listens on `http://localhost:3000` (or `$PORT`). The keyless path uses deterministic canned proposals; set `RECONCILER_PROVIDER_API_KEY` and optionally `RECONCILER_PROVIDER_URL` to exercise the live proposal provider. Runtime state is loaded from LibSQL/Turso on startup and persisted after proposal and review mutations.
+Open `http://localhost:3000`. The keyless path uses deterministic canned proposals; set `RECONCILER_PROVIDER_API_KEY` and optionally `RECONCILER_PROVIDER_URL` to exercise the live proposal provider. Runtime state is loaded from LibSQL/Turso on startup and persisted after proposal and review mutations.
+
+## Staging dashboard (optional)
+
+A long-lived staging instance runs the same synthetic dataset (no production data):
+
+- URL: `http://up6cq0ickmyuycbsb0btq3b3.5.161.80.184.sslip.io`
+- Health: `GET /health`
+
+Prefer the local path above for evaluation. Staging is reset daily from `main` (see `.github/workflows/demo-reset.yml`).
 
 Useful endpoints:
 
