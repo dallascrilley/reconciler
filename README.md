@@ -29,10 +29,12 @@ The default server listens on `http://localhost:3000` (or `$PORT`). The keyless 
 Useful endpoints:
 
 - `GET /api/dashboard` — recovered-revenue counters, class breakdown, review burndown, and the proposal eval gate
+- `GET /api/summary` — dataset seed, account, invoice, and finding counts, findings by kind, and pending proposal and applied action counts
 - `GET /api/findings` — deterministic findings with linked evidence
 - `GET /api/proposals` — pending, edited, approved, and rejected proposals
 - `POST /api/reviews` — approve, edit, or reject a proposal
 - `GET /api/invoices` — current invoice totals after approved mutations
+- `GET /api/billing-actions` — invoice mutations applied after a human approval, with proposal, finding, actor, and timestamp
 - `GET /api/audit` — append-only proposal and human-decision audit events
 
 ## Deterministic seed and persistence
@@ -48,3 +50,7 @@ When a remote Turso database is configured, the runtime also refreshes from the 
 `receipts/generated/` contains the forms and analytics blueprint output. `receipts/catalog-install.json`, `.catalog/transactions/`, `receipts/command-ledger.json`, and `receipts/generated-vs-handwritten.json` record the copied catalog assets and replay command. The ledger is explicitly labeled as a replay because the original first-commit command receipt was not captured.
 
 The source catalog and replay scripts live in [`ai-templates`](https://github.com/DallasCrilleyMarTech/ai-templates); the consumer commit records the source revision used for the receipt.
+
+## License
+
+MIT. See [`LICENSE`](LICENSE).

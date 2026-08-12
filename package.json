@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "description": "A public synthetic billing-reconciliation workbench with deterministic findings, agent proposals, and human review.",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
