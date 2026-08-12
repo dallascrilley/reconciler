@@ -6,15 +6,12 @@ This is a synthetic rebuild inspired by the shape of a private Meter billing aud
 
 ## Live demo
 
-The deployed staging instance runs on Coolify:
+A public staging dashboard is up with the deterministic synthetic dataset (no production data or credentials):
 
-- **URL:** http://up6cq0ickmyuycbsb0btq3b3.5.161.80.184.sslip.io
-- **Health:** `GET /health`
-- **Runtime:** Node.js via Nixpacks on the `rnpr-internal` Coolify server
+- **Dashboard:** http://up6cq0ickmyuycbsb0btq3b3.5.161.80.184.sslip.io
+- **Health:** `GET /health` → `{"ok":true,"service":"reconciler",...}`
 
-The instance uses the deterministic synthetic dataset and contains no production data or credentials.
-
-`GET /` serves the public review dashboard with the visible proposal eval gate, failure drill-down, and approval controls.
+`GET /` is the review UI: proposal eval gate, failure drill-down, and approve/edit/reject controls. A scheduled workflow redeploys from `main` daily and resets the queue to a fresh five-item review state (see `.github/workflows/demo-reset.yml`).
 
 ## Run locally
 
@@ -43,9 +40,7 @@ Useful endpoints:
 
 `pnpm seed` regenerates `data/seeded-dataset.json` and `data/ground-truth.json` using seed `20260713`. `pnpm reset:db` resets a LibSQL database with the same seeded corpus. Set `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` for a remote Turso database; without them, the runtime uses `data/reconciler.db`.
 
-The scheduled GitHub Actions workflow at `.github/workflows/demo-reset.yml` redeploys the Coolify application from `main` each day. A clean deployment recreates the local LibSQL dataset, then the workflow verifies the public dashboard, fresh five-item review queue, zero applied actions, and 5/5 eval gate. Its configuration is documented in `docs/credentials.md`.
-
-When a remote Turso database is configured, the runtime also refreshes from the database revision before requests. The pull-request workflow at `.github/workflows/verify.yml` runs typecheck and the proposal eval gate.
+When a remote Turso database is configured, the runtime also refreshes from the database revision before requests. The pull-request workflow at `.github/workflows/verify.yml` runs typecheck and the proposal eval gate. Daily demo reset configuration (deployment secrets) is documented for maintainers in `docs/credentials.md`.
 
 ## Catalog composition receipts
 
