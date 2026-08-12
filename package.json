@@ -30,5 +30,13 @@
   },
   "engines": {
     "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dallascrilley/reconciler.git"
+  },
+  "homepage": "https://github.com/dallascrilley/reconciler#readme",
+  "bugs": {
+    "url": "https://github.com/dallascrilley/reconciler/issues"
   }
 }
